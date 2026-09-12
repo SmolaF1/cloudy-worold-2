@@ -37,7 +37,7 @@ header{
   background:linear-gradient(180deg,rgba(8,13,25,.92),rgba(8,13,25,.7));
   backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
 }
-.logo{display:flex;align-items:center;gap:4px;text-decoration:none;
+.logo{display:flex;align-items:center;gap:1px;text-decoration:none;
   font-family:var(--display);font-weight:700;font-size:1.05rem}
 .logo b{color:var(--gold)}
 .nav{display:flex;list-style:none;gap:4px;margin:0;padding:0}
