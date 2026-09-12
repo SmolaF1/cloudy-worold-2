@@ -38,7 +38,7 @@
   ::selection{background:var(--gold);color:#22160a}
   a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 var(--pad)}
+  .wrap{max-width:1180px;margin:0 auto}
 
   /* ---------- header ---------- */
 
@@ -147,7 +147,6 @@
     font-size:clamp(1.35rem,3vw,2.1rem);margin:0}
   .sec-sub{margin-top:14px;color:var(--sub);font-size:1rem;max-width:56ch}
   .sec-head.center .sec-sub{margin-inline:auto}
-  .sec-head.tight{max-width:520px}
 
   .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
   @media (max-width:960px){.tiles{grid-template-columns:1fr 1fr}}
@@ -283,77 +282,85 @@
   </section>
 
   <section id="world">
-    <div class="sec-head center tight">
-      <p class="tag">Устройство мира</p>
-      <h2>Каждый сезон &mdash; новая история</h2>
-      <p class="sec-sub">Сезон живёт от полугода до года: свой лор, свои механики и свои герои. А как устроено общество этого мира &mdash; решают игроки.</p>
-    </div>
-    <div class="feats">
-      <article class="feat"><div class="fi">📜</div><h3>Собственный лор</h3><p>У мира есть история, загадки и сезонный сюжет. События сервера складываются в хроники, которые пишутся вместе с вами.</p></article>
-      <article class="feat"><div class="fi">🎭</div><h3>Полу-RP без принуждения</h3><p>Отыгрыш &mdash; по желанию. Можно жить персонажем с историей, а можно просто выживать. Обе роли равноправны.</p></article>
-      <article class="feat"><div class="fi">⚖️</div><h3>Свобода систем</h3><p>Правительство, торговый союз или ничего &mdash; игроки сами придумывают и внедряют устройство мира. Или отвергают его.</p></article>
-      <article class="feat"><div class="fi">🧩</div><h3>Свои механики</h3><p>Ванильная основа плюс аккуратные механики сезона: они добавляют глубину, не ломая дух выживания.</p></article>
-      <article class="feat"><div class="fi">🎙️</div><h3>Голосовой чат</h3><p>Слышно тех, кто рядом. Переговоры на границе, разговоры у костра и тишина глубоких пещер.</p></article>
-      <article class="feat"><div class="fi">🤝</div><h3>Живое взаимодействие</h3><p>Союзы и конфликты, торговля и дипломатия, ярмарки и суды &mdash; главный контент сервера рождается между людьми.</p></article>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Устройство мира</p>
+        <h2>Каждый сезон &mdash; новая история</h2>
+        <p class="sec-sub">Сезон живёт от полугода до года: свой лор, свои механики и свои герои. А как устроено общество этого мира &mdash; решают игроки.</p>
+      </div>
+      <div class="feats">
+        <article class="feat"><div class="fi">📜</div><h3>Собственный лор</h3><p>У мира есть история, загадки и сезонный сюжет. События сервера складываются в хроники, которые пишутся вместе с вами.</p></article>
+        <article class="feat"><div class="fi">🎭</div><h3>Полу-RP без принуждения</h3><p>Отыгрыш &mdash; по желанию. Можно жить персонажем с историей, а можно просто выживать. Обе роли равноправны.</p></article>
+        <article class="feat"><div class="fi">⚖️</div><h3>Свобода систем</h3><p>Правительство, торговый союз или ничего &mdash; игроки сами придумывают и внедряют устройство мира. Или отвергают его.</p></article>
+        <article class="feat"><div class="fi">🧩</div><h3>Свои механики</h3><p>Ванильная основа плюс аккуратные механики сезона: они добавляют глубину, не ломая дух выживания.</p></article>
+        <article class="feat"><div class="fi">🎙️</div><h3>Голосовой чат</h3><p>Слышно тех, кто рядом. Переговоры на границе, разговоры у костра и тишина глубоких пещер.</p></article>
+        <article class="feat"><div class="fi">🤝</div><h3>Живое взаимодействие</h3><p>Союзы и конфликты, торговля и дипломатия, ярмарки и суды &mdash; главный контент сервера рождается между людьми.</p></article>
+      </div>
     </div>
   </section>
 
   <section id="services">
-    <div class="sec-head">
-      <p class="tag">Быстрые переходы</p>
-      <h2>Сервисы мира</h2>
-    </div>
-    <div class="tiles">
-      <a class="tile" href="https://cloudyworlds.ru/rules">
-        <span class="art"></span>
-        <span class="body"><span class="idx">Документ</span><h3>Правила <span>&#8599;</span></h3><p>Свод законов мира. Короткий и понятный.</p></span>
-      </a>
-      <a class="tile" href="https://cloudyworlds.ru/wiki">
-        <span class="art"></span>
-        <span class="body"><span class="idx">Знание</span><h3>Вики <span>&#8599;</span></h3><p>Лор, гайды и хроники государств.</p></span>
-      </a>
-      <a class="tile" href="https://cloudyworlds.ru/map" target="_blank" rel="noopener">
-        <span class="art"></span>
-        <span class="body"><span class="idx">Навигация</span><h3>Онлайн-карта <span>&#8599;</span></h3><p>Мир в браузере, в реальном времени.</p></span>
-      </a>
-      <a class="tile" href="https://cloudyworlds.ru/store" target="_blank" rel="noopener">
-        <span class="art"></span>
-        <span class="body"><span class="idx">Поддержка</span><h3>Магазин <span>&#8599;</span></h3><p>Косметика и вклад в сервер. Без преимуществ.</p></span>
-      </a>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Быстрые переходы</p>
+        <h2>Сервисы мира</h2>
+      </div>
+      <div class="tiles">
+        <a class="tile" href="https://cloudyworlds.ru/rules">
+          <span class="art"></span>
+          <span class="body"><span class="idx">Документ</span><h3>Правила <span>&#8599;</span></h3><p>Свод законов мира. Короткий и понятный.</p></span>
+        </a>
+        <a class="tile" href="https://cloudyworlds.ru/wiki">
+          <span class="art"></span>
+          <span class="body"><span class="idx">Знание</span><h3>Вики <span>&#8599;</span></h3><p>Лор, гайды и хроники государств.</p></span>
+        </a>
+        <a class="tile" href="https://cloudyworlds.ru/map" target="_blank" rel="noopener">
+          <span class="art"></span>
+          <span class="body"><span class="idx">Навигация</span><h3>Онлайн-карта <span>&#8599;</span></h3><p>Мир в браузере, в реальном времени.</p></span>
+        </a>
+        <a class="tile" href="https://cloudyworlds.ru/store" target="_blank" rel="noopener">
+          <span class="art"></span>
+          <span class="body"><span class="idx">Поддержка</span><h3>Магазин <span>&#8599;</span></h3><p>Косметика и вклад в сервер. Без преимуществ.</p></span>
+        </a>
+      </div>
     </div>
   </section>
 
   <section id="rules">
-    <div class="sec-head">
-      <p class="tag">Правила</p>
-      <h2>Коротко о главном</h2>
-    </div>
-    <ul class="rules">
-      <li><span class="no mono">01</span><span>Гриферство и чит-клиенты &mdash; бан без предупреждения.</span></li>
-      <li><span class="no mono">02</span><span>Постройки за пределами заявленной территории могут снести под общую застройку.</span></li>
-      <li><span class="no mono">03</span><span>Русский и английский &mdash; общие языки чата, остальное в личку.</span></li>
-      <li><span class="no mono">04</span><span>PvP только в дикой зоне &mdash; в городах оно выключено.</span></li>
-    </ul>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Правила</p>
+        <h2>Коротко о главном</h2>
+      </div>
+      <ul class="rules">
+        <li><span class="no mono">01</span><span>Гриферство и чит-клиенты &mdash; бан без предупреждения.</span></li>
+        <li><span class="no mono">02</span><span>Постройки за пределами заявленной территории могут снести под общую застройку.</span></li>
+        <li><span class="no mono">03</span><span>Русский и английский &mdash; общие языки чата, остальное в личку.</span></li>
+        <li><span class="no mono">04</span><span>PvP только в дикой зоне &mdash; в городах оно выключено.</span></li>
+      </ul>
 
-    <div class="sec-head center" id="crew" style="margin-top:56px">
-      <p class="tag">Смотрители</p>
-      <h2>Команда сервера</h2>
-    </div>
-    <div class="crew">
-      <article class="member"><div class="avatar"><img src="art/kaezo.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;image-rendering:pixelated"></div><div><h3>Kaezo_</h3><span class="role">Модератор</span><p style="font-size:1.6rem;font-weight:700;color:var(--text)">бебебе</p></div></article>
+      <div class="sec-head center" id="crew" style="margin-top:56px">
+        <p class="tag">Смотрители</p>
+        <h2>Команда сервера</h2>
+      </div>
+      <div class="crew">
+        <article class="member"><div class="avatar"><img src="art/kaezo.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;image-rendering:pixelated"></div><div><h3>Kaezo_</h3><span class="role">Модератор</span><p style="font-size:1.6rem;font-weight:700;color:var(--text)">бебебе</p></div></article>
+      </div>
     </div>
   </section>
 
   <section id="join">
-    <div class="sec-head center tight">
-      <p class="tag">Маршрут</p>
-      <h2>Четыре шага до первой ночи</h2>
-    </div>
-    <div class="path">
-      <div class="pstep"><h3>Войдите через Discord</h3><p>Откройте <a href="https://cloudyworlds.ru/account.html">личный кабинет</a> и авторизуйтесь одним кликом через Discord.</p></div>
-      <div class="pstep"><h3>Прочитайте правила</h3><p>Они короткие и написаны для людей &mdash; <a href="https://cloudyworlds.ru/rules">свод правил</a>.</p></div>
-      <div class="pstep"><h3>Подайте заявку</h3><p>Прямо в кабинете ответьте на пару вопросов о себе. Отвечаем быстро.</p></div>
-      <div class="pstep"><h3>Заходите в мир</h3><p>После одобрения роль игрока выдаётся автоматически, а решение придёт в Discord.</p></div>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Маршрут</p>
+        <h2>Четыре шага до первой ночи</h2>
+      </div>
+      <div class="path">
+        <div class="pstep"><h3>Войдите через Discord</h3><p>Откройте <a href="https://cloudyworlds.ru/account.html">личный кабинет</a> и авторизуйтесь одним кликом через Discord.</p></div>
+        <div class="pstep"><h3>Прочитайте правила</h3><p>Они короткие и написаны для людей &mdash; <a href="https://cloudyworlds.ru/rules">свод правил</a>.</p></div>
+        <div class="pstep"><h3>Подайте заявку</h3><p>Прямо в кабинете ответьте на пару вопросов о себе. Отвечаем быстро.</p></div>
+        <div class="pstep"><h3>Заходите в мир</h3><p>После одобрения роль игрока выдаётся автоматически, а решение придёт в Discord.</p></div>
+      </div>
     </div>
   </section>
 
