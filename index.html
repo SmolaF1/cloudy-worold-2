@@ -147,6 +147,28 @@
     font-size:clamp(1.35rem,3vw,2.1rem);margin:0}
   .sec-sub{margin-top:14px;color:var(--sub);font-size:1rem;max-width:56ch}
   .sec-head.center .sec-sub{margin-inline:auto}
+  .sec-head.tight{max-width:520px}
+
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media (max-width:960px){.tiles{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.tiles{grid-template-columns:1fr}}
+  .tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+    aspect-ratio:3/4;border-radius:16px;overflow:hidden;text-decoration:none;
+    border:1px solid var(--line);transition:transform .25s,border-color .25s,box-shadow .3s}
+  .tile:hover{transform:translateY(-6px);border-color:var(--line-gold);box-shadow:0 24px 48px rgba(0,0,0,.45)}
+  .tile .art{position:absolute;inset:0}
+  .tile:nth-child(1) .art{background:linear-gradient(200deg,#2C3E6E,#131E3E 70%)}
+  .tile:nth-child(2) .art{background:linear-gradient(200deg,#4A3670,#1A1436 70%)}
+  .tile:nth-child(3) .art{background:linear-gradient(200deg,#1E5C56,#0D2530 70%)}
+  .tile:nth-child(4) .art{background:linear-gradient(200deg,#6E4A2C,#2E1B10 70%)}
+  .tile .body{position:relative;z-index:2;padding:20px 18px;
+    background:linear-gradient(transparent,rgba(6,10,20,.9) 55%)}
+  .tile .idx{font-family:var(--display);font-size:.58rem;letter-spacing:.24em;color:var(--gold);text-transform:uppercase}
+  .tile h3{font-family:var(--display);font-weight:700;font-size:1.02rem;margin:8px 0 6px;
+    display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .tile h3 span{font-size:.95rem;color:var(--gold);transition:transform .25s}
+  .tile:hover h3 span{transform:translate(3px,-3px)}
+  .tile p{font-size:.82rem;color:var(--sub);margin:0}
 
   .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   @media (max-width:960px){.feats{grid-template-columns:1fr 1fr}}
@@ -159,8 +181,6 @@
   .feat h3{font-family:var(--display);font-weight:700;font-size:.98rem;margin:0 0 8px}
   .feat p{color:var(--sub);font-size:.92rem;margin:0}
 
-  .rules-crew{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:start}
-  @media (max-width:860px){.rules-crew{grid-template-columns:1fr}}
   .rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
   .rules li{display:flex;gap:12px;align-items:baseline;border-bottom:1px solid var(--line);
     padding-bottom:12px;font-size:.96rem}
@@ -262,7 +282,7 @@
   </section>
 
   <section id="world">
-    <div class="sec-head">
+    <div class="sec-head center tight">
       <p class="tag">Устройство мира</p>
       <h2>Каждый сезон &mdash; новая история</h2>
       <p class="sec-sub">Сезон живёт от полугода до года: свой лор, свои механики и свои герои. А как устроено общество этого мира &mdash; решают игроки.</p>
@@ -277,34 +297,54 @@
     </div>
   </section>
 
+  <section id="services">
+    <div class="sec-head">
+      <p class="tag">Быстрые переходы</p>
+      <h2>Сервисы мира</h2>
+    </div>
+    <div class="tiles">
+      <a class="tile" href="https://cloudyworlds.ru/rules">
+        <span class="art"></span>
+        <span class="body"><span class="idx">Документ</span><h3>Правила <span>&#8599;</span></h3><p>Свод законов мира. Короткий и понятный.</p></span>
+      </a>
+      <a class="tile" href="https://cloudyworlds.ru/wiki">
+        <span class="art"></span>
+        <span class="body"><span class="idx">Знание</span><h3>Вики <span>&#8599;</span></h3><p>Лор, гайды и хроники государств.</p></span>
+      </a>
+      <a class="tile" href="https://cloudyworlds.ru/map" target="_blank" rel="noopener">
+        <span class="art"></span>
+        <span class="body"><span class="idx">Навигация</span><h3>Онлайн-карта <span>&#8599;</span></h3><p>Мир в браузере, в реальном времени.</p></span>
+      </a>
+      <a class="tile" href="https://cloudyworlds.ru/store" target="_blank" rel="noopener">
+        <span class="art"></span>
+        <span class="body"><span class="idx">Поддержка</span><h3>Магазин <span>&#8599;</span></h3><p>Косметика и вклад в сервер. Без преимуществ.</p></span>
+      </a>
+    </div>
+  </section>
+
   <section id="rules">
-    <div class="rules-crew">
-      <div>
-        <div class="sec-head">
-          <p class="tag">Правила</p>
-          <h2>Коротко о главном</h2>
-        </div>
-        <ul class="rules">
-          <li><span class="no mono">01</span><span>Гриферство и чит-клиенты &mdash; бан без предупреждения.</span></li>
-          <li><span class="no mono">02</span><span>Постройки за пределами заявленной территории могут снести под общую застройку.</span></li>
-          <li><span class="no mono">03</span><span>Русский и английский &mdash; общие языки чата, остальное в личку.</span></li>
-          <li><span class="no mono">04</span><span>PvP только в дикой зоне &mdash; в городах оно выключено.</span></li>
-        </ul>
-      </div>
-      <div id="crew">
-        <div class="sec-head">
-          <p class="tag">Смотрители</p>
-          <h2>Команда сервера</h2>
-        </div>
-        <div class="crew">
-          <article class="member"><div class="avatar"><img src="art/kaezo.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;image-rendering:pixelated"></div><div><h3>Kaezo_</h3><span class="role">Модератор</span><p style="font-size:1.6rem;font-weight:700;color:var(--text)">бебебе</p></div></article>
-        </div>
-      </div>
+    <div class="sec-head">
+      <p class="tag">Правила</p>
+      <h2>Коротко о главном</h2>
+    </div>
+    <ul class="rules">
+      <li><span class="no mono">01</span><span>Гриферство и чит-клиенты &mdash; бан без предупреждения.</span></li>
+      <li><span class="no mono">02</span><span>Постройки за пределами заявленной территории могут снести под общую застройку.</span></li>
+      <li><span class="no mono">03</span><span>Русский и английский &mdash; общие языки чата, остальное в личку.</span></li>
+      <li><span class="no mono">04</span><span>PvP только в дикой зоне &mdash; в городах оно выключено.</span></li>
+    </ul>
+
+    <div class="sec-head" id="crew" style="margin-top:56px">
+      <p class="tag">Смотрители</p>
+      <h2>Команда сервера</h2>
+    </div>
+    <div class="crew">
+      <article class="member"><div class="avatar"><img src="art/kaezo.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;image-rendering:pixelated"></div><div><h3>Kaezo_</h3><span class="role">Модератор</span><p style="font-size:1.6rem;font-weight:700;color:var(--text)">бебебе</p></div></article>
     </div>
   </section>
 
   <section id="join">
-    <div class="sec-head">
+    <div class="sec-head center tight">
       <p class="tag">Маршрут</p>
       <h2>Четыре шага до первой ночи</h2>
     </div>
