@@ -6,3 +6,4 @@ out
 dev.db
 dev.db-journal
 *.log
+.ref/
