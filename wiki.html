@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вики — Cloudy Worold 2</title>
+<meta name="description" content="Вики сервера Cloudy Worold 2: как попасть на сервер, F.A.Q., команды, плагины, механики, разрешённые моды, пивоварение, словарь мира и хроники сезонов.">
+<meta name="theme-color" content="#0A1120">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .page-head{padding:56px var(--pad) 0}
+  .page-head h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin:10px 0 0}
+
+  .wikibook{padding:48px var(--pad) 0;display:grid;grid-template-columns:260px 1fr;gap:48px;align-items:start}
+  @media (max-width:900px){.wikibook{grid-template-columns:1fr}}
+
+  .side{position:sticky;top:96px}
+  @media (max-width:900px){.side{position:static}}
+  .side-nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;
+    border-left:1px solid var(--line);max-height:calc(100vh - 120px);overflow-y:auto}
+  .side-nav a{display:block;text-decoration:none;color:var(--sub);font-size:.86rem;
+    padding:8px 0 8px 16px;border-left:2px solid transparent;margin-left:-1px;transition:color .2s}
+  .side-nav a:hover{color:var(--text)}
+  .side-nav .n{font-family:'JetBrains Mono',monospace;color:var(--gold);margin-right:8px;font-size:.78rem}
+
+  .wiki-sec{margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid var(--line);scroll-margin-top:96px}
+  .wiki-sec:last-child{border-bottom:none}
+  .wiki-sec .rs-num{font-family:var(--display);color:var(--gold);font-size:.8rem;margin-right:10px}
+  .wiki-sec h2{display:inline;font-size:clamp(1.1rem,2.2vw,1.5rem)}
+  .wiki-sec .rs-intro{color:var(--sub);margin:12px 0 0;font-size:.94rem;max-width:64ch}
+  .wiki-sec h3{font-family:var(--display);font-weight:700;font-size:.98rem;margin:0 0 10px}
+
+  /* info grid (Добро пожаловать) */
+  .infogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:28px}
+  @media (max-width:700px){.infogrid{grid-template-columns:1fr 1fr}}
+  .infogrid div{background:var(--panel);padding:16px 18px}
+  .infogrid .k{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--sub)}
+  .infogrid .v{margin-top:6px;font-family:var(--display);font-size:.92rem;color:var(--gold-soft)}
+
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
+  @media (max-width:700px){.paths{grid-template-columns:1fr}}
+  .path-card{background:linear-gradient(165deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:14px;padding:22px 22px}
+  .path-card h3{color:var(--gold-soft)}
+  .path-card ol{margin:0;padding-left:20px;color:var(--sub);font-size:.9rem;display:flex;flex-direction:column;gap:6px}
+
+  /* FAQ */
+  .faq{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+  .faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .faq summary{cursor:pointer;font-weight:700;font-size:.92rem;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::before{content:'+';color:var(--gold);margin-right:10px;font-family:var(--display)}
+  .faq details[open] summary::before{content:'\2212'}
+  .faq p{margin:12px 0 0;color:var(--sub);font-size:.9rem}
+
+  /* generic two-col lists */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:24px}
+  @media (max-width:700px){.twocol{grid-template-columns:1fr}}
+  .checklist2{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;color:var(--sub);font-size:.9rem}
+  .checklist2 li{display:flex;gap:10px}
+  .checklist2 li::before{content:'\2726';color:var(--gold);flex:none}
+
+  /* commands table */
+  .cmd-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:.88rem}
+  .cmd-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--sub);padding:8px 12px;border-bottom:1px solid var(--line)}
+  .cmd-table td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--sub)}
+  .cmd-table code{font-family:'JetBrains Mono',monospace;color:var(--gold-soft);font-size:.86rem}
+  .table-scroll{overflow-x:auto}
+
+  /* plugin feature cards */
+  .plugins{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+  @media (max-width:960px){.plugins{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.plugins{grid-template-columns:1fr}}
+  .pcard{background:linear-gradient(165deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:14px;padding:20px 18px}
+  .pcard .ic{font-size:1.4rem}
+  .pcard h4{font-family:var(--display);font-weight:700;font-size:.9rem;margin:12px 0 8px}
+  .pcard p{color:var(--sub);font-size:.86rem;margin:0}
+
+  /* mechanic cards */
+  .mech{display:flex;flex-direction:column;gap:20px;margin-top:24px}
+  .mcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+  .mcard .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--gold);border:1px solid var(--line-gold);border-radius:100px;padding:3px 10px;margin-bottom:10px}
+  .mcard h4{font-family:var(--display);font-weight:700;font-size:.98rem;margin:0 0 8px}
+  .mcard p{color:var(--sub);font-size:.9rem;margin:0 0 12px}
+  .mcard .where{font-size:.82rem;color:var(--gold-soft);margin-bottom:10px}
+  .mcard ol{margin:0;padding-left:20px;color:var(--sub);font-size:.88rem;display:flex;flex-direction:column;gap:6px}
+
+  /* mods lists */
+  .modlist{list-style:none;margin:0;padding:0;column-count:2;column-gap:24px;font-size:.86rem}
+  @media (max-width:520px){.modlist{column-count:1}}
+  .modlist li{break-inside:avoid;padding:5px 0;display:flex;gap:8px;color:var(--sub)}
+  .modlist.allow li::before{content:'\2713';color:var(--sky);flex:none}
+  .modlist.deny li::before{content:'\2715';color:var(--danger);flex:none}
+  .modcol h3{margin-bottom:4px}
+  .modcol.allow h3{color:var(--sky)}
+  .modcol.deny h3{color:var(--danger)}
+
+  /* brewing steps */
+  .brewsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:b;margin-top:24px}
+  @media (max-width:900px){.brewsteps{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.brewsteps{grid-template-columns:1fr}}
+  .bstep{background:linear-gradient(165deg,var(--panel2),var(--panel));border:1px solid var(--line);
+    border-radius:14px;padding:20px 18px}
+  .bstep::before{counter-increment:b;content:'0' counter(b);font-family:var(--display);font-weight:800;
+    font-size:1.5rem;color:transparent;-webkit-text-stroke:1px var(--line-gold);display:block;margin-bottom:10px}
+  .bstep h4{font-family:var(--display);font-weight:700;font-size:.9rem;margin:0 0 8px}
+  .bstep p{color:var(--sub);font-size:.86rem;margin:0}
+
+  .recipe-search{width:100%;max-width:420px;font-family:var(--body);font-size:.88rem;color:var(--text);
+    background:rgba(17,28,54,.7);border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin-top:24px}
+  .recipe-search:focus{outline:none;border-color:var(--gold)}
+  .recipe-table{width:100%;border-collapse:collapse;margin-top:18px;font-size:.84rem;min-width:720px}
+  .recipe-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--sub);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  .recipe-table td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--sub)}
+  .recipe-table td:first-child{color:var(--text);font-weight:600}
+  .recipe-table tr[hidden]{display:none}
+
+  /* checklist with localStorage */
+  .day1{margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+  .day1 .progress{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--gold-soft);margin-bottom:14px}
+  .day1 ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  .day1 li{display:flex;align-items:center;gap:12px;font-size:.92rem}
+  .day1 input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold);flex:none}
+  .day1 li.done span{color:var(--sub);text-decoration:line-through}
+
+  /* glossary */
+  .glossary{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  @media (max-width:700px){.glossary{grid-template-columns:1fr}}
+  .gterm{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .gterm dt{font-family:var(--display);font-weight:700;color:var(--gold-soft);font-size:.92rem}
+  .gterm dd{margin:8px 0 0;color:var(--sub);font-size:.88rem}
+
+  /* timeline */
+  .timeline{margin-top:28px;display:flex;flex-direction:column;gap:0;border-left:2px solid var(--line-gold);padding-left:26px}
+  .tl-item{position:relative;padding-bottom:36px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{content:'';position:absolute;left:-32px;top:4px;width:10px;height:10px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 0 4px rgba(232,180,76,.18)}
+  .tl-era{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .tl-item h4{font-family:var(--display);font-weight:700;font-size:.98rem;margin:8px 0 8px}
+  .tl-item p{color:var(--sub);font-size:.9rem;margin:0;max-width:64ch}
+
+  .docnav{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    padding:48px var(--pad) 64px;font-size:.9rem}
+  .docnav a{text-decoration:none;color:var(--sub);display:flex;align-items:center;gap:8px;transition:color .2s}
+  .docnav a:hover{color:var(--text)}
+  .docnav .next{text-align:right;flex-direction:row-reverse}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html#top">Cloudy <b>Worold 2</b></a>
+  <nav><ul class="nav">
+    <li><a href="index.html#world">Мир</a></li>
+    <li><a href="rules.html">Правила</a></li>
+    <li><a href="index.html#crew">Команда</a></li>
+    <li><a href="index.html#join">Как зайти</a></li>
+    <li><a href="wiki.html">Вики</a></li>
+  </ul></nav>
+  <a class="btn small" href="https://discord.gg/DKUdvZEhP" target="_blank" rel="noopener">Discord</a>
+</header>
+
+<main>
+  <div class="page-head">
+    <p class="tag">Документ</p>
+    <h1>Вики сервера</h1>
+  </div>
+
+  <div class="wikibook">
+    <aside class="side">
+      <ul class="side-nav">
+        <li><a href="#w-1"><span class="n">01</span>Добро пожаловать</a></li>
+        <li><a href="#w-2"><span class="n">02</span>F.A.Q.</a></li>
+        <li><a href="#w-3"><span class="n">03</span>Контент-мейкеры</a></li>
+        <li><a href="#w-4"><span class="n">04</span>Команды</a></li>
+        <li><a href="#w-5"><span class="n">05</span>Базовые плагины</a></li>
+        <li><a href="#w-6"><span class="n">06</span>Инструменты и механики</a></li>
+        <li><a href="#w-7"><span class="n">07</span>Модификации</a></li>
+        <li><a href="#w-8"><span class="n">08</span>Пивоварение</a></li>
+        <li><a href="#w-9"><span class="n">09</span>Гайд новичка</a></li>
+        <li><a href="#w-10"><span class="n">10</span>Словарь мира</a></li>
+        <li><a href="#w-11"><span class="n">11</span>Хроники сезонов</a></li>
+      </ul>
+    </aside>
+
+    <div class="wiki-body">
+
+      <section class="wiki-sec" id="w-1">
+        <span class="rs-num">01</span><h2>Добро пожаловать</h2>
+        <p class="rs-intro">Cloudy Worold 2 &mdash; сезонный полу-RP сервер Vanilla+ на версии 26.1.2. Чистая атмосфера оригинальной игры плюс собственный лор, механики сезона и свобода игроков в выборе устройства мира: строительство, исследования, политика или просто уютные вечера в компании.</p>
+
+        <div class="infogrid">
+          <div><div class="k">Версия</div><div class="v mono">Java 26.1.2</div></div>
+          <div><div class="k">Адрес</div><div class="v mono">play.cloudyworlds.ru</div></div>
+          <div><div class="k">Лицензия</div><div class="v">Не обязательна</div></div>
+          <div><div class="k">Bedrock</div><div class="v">Нет, только Java</div></div>
+        </div>
+
+        <h3 style="margin-top:32px">Как попасть на сервер</h3>
+        <div class="paths">
+          <div class="path-card">
+            <h3>Путь 1 &middot; Бесплатная проходка</h3>
+            <ol>
+              <li>Напишите заявку на нашем Discord-сервере</li>
+              <li>Дождитесь одобрения администрации</li>
+              <li>Заходите в игру по адресу сервера</li>
+            </ol>
+          </div>
+          <div class="path-card">
+            <h3>Путь 2 &middot; Платная проходка</h3>
+            <ol>
+              <li>Купите проходку в магазине</li>
+              <li>Заходите в игру по адресу сервера &mdash; без ожидания</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="wiki-sec" id="w-2">
+        <span class="rs-num">02</span><h2>F.A.Q.</h2>
+        <p class="rs-intro">Ответы на вопросы, которые задают чаще всего.</p>
+        <div class="faq">
+          <details>
+            <summary>Какие размеры миров?</summary>
+            <p>Обычный мир &mdash; 5000 &times; 5000, Ад &mdash; 5000 &times; 5000, Энд &mdash; 5000 &times; 5000.</p>
+          </details>
+          <details>
+            <summary>От чего зависит принятие заявки?</summary>
+            <p>Полностью от качества её заполнения. Креативная, грамотная и подробная заявка имеет высокие шансы на одобрение.</p>
+          </details>
+          <details>
+            <summary>Сколько рассматривается заявка?</summary>
+            <p>Обычно до 5 часов, но администрация оставляет за собой право продлить рассмотрение до двух суток. Неадекватное поведение или настойчивые просьбы ускорить процесс могут повлечь негативные последствия.</p>
+          </details>
+          <details>
+            <summary>Разрешены ли дюпы?</summary>
+            <p>Нет, запрещены все дюпы, кроме дюпа ковров и ТНТ.</p>
+          </details>
+          <details>
+            <summary>Что происходит между сезонами?</summary>
+            <p>Сезон длится от полугода до года и завершается финалом сюжета. Затем мир обновляется, а история сезона остаётся в хрониках вики.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="wiki-sec" id="w-3">
+        <span class="rs-num">03</span><h2>Контент-мейкеры</h2>
+        <p class="rs-intro">Контент-мейкер &mdash; любой, кто создаёт контент о сервере и делится им в соцсетях: стример на Twitch, автор видео или стример на YouTube &mdash; или всё сразу. Одобренные попадают на «Медийку».</p>
+        <div class="twocol">
+          <div>
+            <h3>Условия нахождения</h3>
+            <ul class="checklist2">
+              <li>Выпускать качественный и интересный контент с монтажом, не противоречащий правилам сервера (исключения &mdash; только с разрешения администрации)</li>
+              <li>Выпускать контент хотя бы раз в месяц</li>
+              <li>Не нарушать правила сервера многократно</li>
+              <li>Оставлять в описании информацию, как попасть на сервер</li>
+              <li>Не выпускать контент по сторонним приватным или ванильным серверам во время нахождения на Медийке</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Что получает контент-мейкер</h3>
+            <ul class="checklist2">
+              <li>Выделяющая роль в Discord среди других «Медиа»</li>
+              <li>Право публиковать свои материалы в канале «Медиа»</li>
+              <li>Выделяющая привилегия на сервере</li>
+              <li>Более близкая связь с администрацией</li>
+              <li>Публикация канала на вики сервера</li>
+            </ul>
+          </div>
+        </div>
+        <p class="rs-intro" style="margin-top:20px">Подать заявку на Медийку можно в Discord.</p>
+      </section>
+
+      <section class="wiki-sec" id="w-4">
+        <span class="rs-num">04</span><h2>Команды</h2>
+        <p class="rs-intro">Полезные команды для общения, отыгрыша и повседневной жизни в мире.</p>
+        <div class="table-scroll">
+          <table class="cmd-table">
+            <thead><tr><th>Команда</th><th>Назначение</th></tr></thead>
+            <tbody>
+              <tr><td><code>/ie rename</code> &middot; <code>/ie lore</code></td><td>Переименовать предмет и изменить его описание</td></tr>
+              <tr><td><code>/sit</code></td><td>Сесть</td></tr>
+              <tr><td><code>/lay</code></td><td>Лечь</td></tr>
+              <tr><td><code>/crawl</code></td><td>Ползти</td></tr>
+              <tr><td><code>/spin</code></td><td>Крутиться</td></tr>
+              <tr><td><code>/bellyflop</code></td><td>Лежать на животе</td></tr>
+              <tr><td><code>/tell</code> &middot; <code>/msg</code> &middot; <code>/w</code></td><td>Написать личное сообщение</td></tr>
+              <tr><td><code>/r</code></td><td>Быстрый ответ на личное сообщение</td></tr>
+              <tr><td><code>/me</code></td><td>Действие от лица персонажа</td></tr>
+              <tr><td><code>/try</code></td><td>Действие на проверку &mdash; с исходом «получилось / не получилось»</td></tr>
+              <tr><td><code>/roll</code></td><td>Кинуть кости в локальном чате</td></tr>
+              <tr><td><code>/ignore</code></td><td>Игнорировать игрока</td></tr>
+              <tr><td><code>/vrc</code></td><td>Перезапустить голосовой чат, если он перестал работать</td></tr>
+              <tr><td><code>/ab</code></td><td>Боковое меню</td></tr>
+              <tr><td><code>/squaremap hide</code></td><td>Скрыть себя с онлайн-карты</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="wiki-sec" id="w-5">
+        <span class="rs-num">05</span><h2>Базовые плагины</h2>
+        <p class="rs-intro">Три вещи, которые стоит поставить перед первым заходом &mdash; с ними мир зазвучит и оживёт.</p>
+        <div class="plugins">
+          <div class="pcard"><div class="ic">&#128266;</div><h4>Голосовой чат</h4><p>Мы используем PlasmoVoice &mdash; голос слышно тем, кто рядом в игре. Клавиша настройки &mdash; V, мут &mdash; M.</p></div>
+          <div class="pcard"><div class="ic">&#128131;</div><h4>Эмоции</h4><p>Плагин EmoteCraft добавляет анимации-эмоции, как в Bedrock. Меню эмоций &mdash; клавиша B.</p></div>
+          <div class="pcard"><div class="ic">&#127912;</div><h4>Свои текстуры</h4><p>Cit Resewn позволяет использовать пользовательские текстуры для предметов &mdash; переименованные вещи могут выглядеть по-особенному.</p></div>
+          <div class="pcard"><div class="ic">&#128100;</div><h4>Смена скина</h4><p>Команда <code class="mono">/skin</code> с параметрами: <code class="mono">set</code> &mdash; загрузить скин по нику игрока, <code class="mono">url</code> &mdash; по прямой ссылке на файл, <code class="mono">random</code> &mdash; случайный скин.</p></div>
+        </div>
+      </section>
+
+      <section class="wiki-sec" id="w-6">
+        <span class="rs-num">06</span><h2>Инструменты и механики</h2>
+        <p class="rs-intro">По вашим просьбам мы добавили несколько плагинов и механик. Ниже &mdash; что это и как этим пользоваться. Не нашли нужную кнопку &mdash; спросите в Discord.</p>
+        <div class="mech">
+          <div class="mcard">
+            <h4>&#127919; Редактор стоек для брони</h4>
+            <p>Гибко настраивайте позы армор-стендов прямо в выживании: поворот головы, рук, ног и тела, точное положение, размер, видимость, гравитация и подставка. Всё без команд &mdash; одним предметом.</p>
+            <div class="where">Инструмент: Кремень в руке</div>
+            <ol>
+              <li>Поставьте армор-стенд и возьмите кремень в руку.</li>
+              <li>Наведитесь на стенд и нажмите F &mdash; стенд выбран для редактирования.</li>
+              <li>Shift + колесо мыши &mdash; переключайте режим (голова, руки, ноги, тело, позиция, размер, видимость…).</li>
+              <li>ПКМ / ЛКМ по стенду &mdash; точная и грубая подстройка выбранного режима.</li>
+              <li>Готово &mdash; поза сохраняется. Работает и в приватах (WorldGuard/GriefPrevention).</li>
+            </ol>
+          </div>
+          <div class="mcard">
+            <span class="badge">Только для спонсоров</span>
+            <h4>&#128191; Музыкальные пластинки</h4>
+            <p>Проигрывайте музыку с YouTube, SoundCloud и других источников прямо в игре. Звук слышно через голосовой чат тем, кто рядом.</p>
+            <div class="where">Нужно: клиент PlasmoVoice (см. раздел «Базовые плагины»)</div>
+            <ol>
+              <li>Возьмите музыкальную пластинку в руку.</li>
+              <li><code class="mono">/disc search &lt;запрос&gt;</code> &mdash; найти трек (или используйте прямую ссылку).</li>
+              <li><code class="mono">/disc burn &lt;ссылка&gt; [название]</code> &mdash; «прожечь» трек на пластинку.</li>
+              <li>Вставьте пластинку в проигрыватель &mdash; заиграет музыка, слышно соседям.</li>
+              <li><code class="mono">/disc erase</code> &mdash; стереть запись, <code class="mono">/disc cancel</code> &mdash; остановить воспроизведение.</li>
+            </ol>
+            <p style="margin-top:12px">Доступно обладателям статуса «Спонсор» &mdash; роль выдаётся за покупку в магазине.</p>
+          </div>
+          <div class="mcard">
+            <h4>&#129930; Резка в камнерезе</h4>
+            <p>Теперь каменный резак умеет не только камень. Обрабатывайте дерево, медь и стекло &mdash; быстро получайте нужные варианты блоков без верстака.</p>
+            <div class="where">Где: обычный Каменный резак</div>
+            <ol>
+              <li>Поставьте каменный резак и откройте его.</li>
+              <li>Положите материал: бревно или доски, медный блок, стекло.</li>
+              <li>Выберите нужный вариант из появившихся рецептов (двери, лестницы, панели, плиты, прутья и т.д.).</li>
+              <li>Заберите результат. Поддерживаются все виды дерева, а для меди &mdash; снятие воска и окисления.</li>
+            </ol>
+          </div>
+          <div class="mcard">
+            <h4>&#128444;&#65039; Невидимые рамки</h4>
+            <p>Сделайте рамку невидимой &mdash; предмет будет висеть будто сам по себе. Идеально для витрин, декора и табличек-меню.</p>
+            <div class="where">Shift + ПКМ по рамке</div>
+            <ol>
+              <li>Повесьте рамку и вставьте в неё предмет.</li>
+              <li>Присядьте (Shift) и нажмите ПКМ по рамке &mdash; рамка исчезнет, останется только предмет.</li>
+              <li>Повторите Shift + ПКМ, чтобы вернуть рамку обратно.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="wiki-sec" id="w-7">
+        <span class="rs-num">07</span><h2>Модификации</h2>
+        <p class="rs-intro">Оптимизация, красота и удобство &mdash; можно. Всё, что даёт нечестное преимущество, &mdash; нельзя. Ресурспаки тоже считаются модификацией: разрешены любые, кроме читерских.</p>
+        <div class="twocol">
+          <div class="modcol allow">
+            <h3>&#10003; Разрешено</h3>
+            <ul class="modlist allow">
+              <li>Sodium</li><li>Lithium</li><li>Phosphor</li><li>OptiFine</li><li>OptiFabric</li>
+              <li>Iris Shaders</li><li>Fabric API</li><li>Smooth Boot</li><li>Not Enough Crashes</li>
+              <li>Badlion Client</li><li>Xaero's World Map</li><li>Xaero's Minimap</li>
+              <li>Xaero's MiniMap Fair Play</li><li>VoxelMap</li><li>MiniHUD</li><li>Light Level Overlay</li>
+              <li>Litematica</li><li>Replay Mod</li><li>JEI</li><li>Shulker Tooltip</li><li>Held Item Info</li>
+              <li>OffersHUD</li><li>Advancements Enlarger</li><li>Chat Heads</li><li>Chat Up</li>
+              <li>Stendhal</li><li>Twitch Chat Bridge</li><li>CraftPresence</li><li>Presence Footsteps</li>
+              <li>LambDynamicLights</li><li>Colormatic</li><li>Blur (Fabric)</li><li>Logical Zoom</li>
+              <li>Better Dropped Items</li><li>Better Mod Button</li><li>ModMenu</li><li>ModUpdater</li>
+              <li>StepUpNext</li><li>Clist</li><li>Cit Resewn</li><li>Fullbright</li>
+              <li>Item Scroller &mdash; используйте осторожно</li><li>Freecam Modrinth Edition &mdash; разрешён</li>
+            </ul>
+          </div>
+          <div class="modcol deny">
+            <h3>&#10007; Запрещено</h3>
+            <ul class="modlist deny">
+              <li>Чит-модификации (любые)</li><li>X-Ray (любые)</li><li>Авто-убийство мобов (любые)</li>
+              <li>Cheat Engine</li><li>Aristois</li><li>Baritone</li><li>MeteorClient</li>
+              <li>Better PVP (все версии)</li><li>BetterClicker</li><li>ClientCommands</li><li>CMDCam</li>
+              <li>FindMe</li><li>FreeCam</li><li>Impact</li><li>Inertia</li><li>InvMove</li><li>Jello</li>
+              <li>LavaClearView</li><li>NoFog</li><li>SeedCracker и аналоги</li><li>Sigma</li><li>Wurst</li>
+              <li>Liquidbounce</li><li>Tweakeroo</li><li>Wall-Jump</li><li>Faster Ladder Climbing</li>
+              <li>No darkness effect</li><li>Librarian Trade Finder</li><li>Autototem</li><li>Booktrolling</li>
+              <li>Printer Litematica</li>
+            </ul>
+          </div>
+        </div>
+        <p class="rs-intro" style="margin-top:20px">Не нашли свой мод в списках? Уточните у администрации в Discord до захода на сервер. Вместо NoFog используйте Sodium Extra или OptiFine.</p>
+      </section>
+
+      <section class="wiki-sec" id="w-8">
+        <span class="rs-num">08</span><h2>Пивоварение</h2>
+        <p class="rs-intro">Brewery &mdash; механика, добавляющая напитки, которых никогда не было в Minecraft. От пшеничного пива до глинтвейна: варите, перегоняйте, выдерживайте в бочках и открывайте таверны.</p>
+
+        <div class="brewsteps">
+          <div class="bstep"><h4>Ферментация</h4><p>Поставьте котёл на огонь, наполните водой, добавьте ингредиенты ПКМ и подождите несколько минут, пока они бродят.</p></div>
+          <div class="bstep"><h4>Дистилляция</h4><p>Поставьте бутылку с закваской в варочную стойку, а сверху &mdash; пыль светокамня в качестве фильтра.</p></div>
+          <div class="bstep"><h4>Выдержка</h4><p>Соберите бочку из лестниц (и заборов для большой), табличка с надписью «Barrel». Каждый игровой день = год выдержки. Тип древесины влияет на вкус.</p></div>
+          <div class="bstep"><h4>Дегустация</h4><p>Качество решает всё: от лёгкого веселья до заплетающихся ног, спутанного чата и отравления. Трезвеют от времени, молока и хлеба.</p></div>
+        </div>
+
+        <h3 style="margin-top:32px">Сборка бочек</h3>
+        <p class="rs-intro">Маленькая бочка (9 слотов) &mdash; 8 деревянных лестниц в форме бочки, табличка «Barrel» в правом нижнем углу. Большая бочка (27 слотов) &mdash; 5 заборов, 16 лестниц и 18 досок, кран из ограждения и табличка «Barrel». Чтобы удалить бочку &mdash; сломайте табличку, открыть &mdash; нажмите на неё. Бочки для «дубовых» рецептов делаются из дуба.</p>
+
+        <h3 style="margin-top:32px">Книга рецептов</h3>
+        <input type="search" id="recipeSearch" class="recipe-search" placeholder="Найти напиток или ингредиент — например, «виски» или «яблоко»…">
+        <div class="table-scroll">
+          <table class="recipe-table" id="recipeTable">
+            <thead><tr><th>Напиток</th><th>Ингредиенты</th><th>Варка</th><th>Дистилляция</th><th>Выдержка</th></tr></thead>
+            <tbody>
+              <tr><td>Пшеничное пиво</td><td>Пшеница &times;8</td><td>8 мин</td><td>&mdash;</td><td>2 года &middot; берёза</td></tr>
+              <tr><td>Пиво</td><td>Пшеница &times;6</td><td>8 мин</td><td>&mdash;</td><td>3 года &middot; любая бочка</td></tr>
+              <tr><td>Тёмное пиво</td><td>Пшеница &times;6</td><td>10 мин</td><td>&mdash;</td><td>8 лет &middot; тёмный дуб</td></tr>
+              <tr><td>Красное вино</td><td>Ягоды &times;10</td><td>10 мин</td><td>&mdash;</td><td>20 лет &middot; любая бочка</td></tr>
+              <tr><td>Белое сухое вино</td><td>Ягоды &times;5, белый краситель &times;1</td><td>10 мин</td><td>&mdash;</td><td>20 лет &middot; любая бочка</td></tr>
+              <tr><td>Коньяк</td><td>Сладкие ягоды &times;10, светящиеся ягоды &times;5</td><td>10 мин</td><td>4 раза</td><td>9 лет &middot; ель</td></tr>
+              <tr><td>Медовуха</td><td>Сахар &times;6, бутылочка мёда &times;1</td><td>3 мин</td><td>&mdash;</td><td>4 года &middot; дуб</td></tr>
+              <tr><td>Яблочная медовуха</td><td>Сахар &times;6, бутылочка мёда &times;1, яблоко &times;2</td><td>4 мин</td><td>&mdash;</td><td>4 года &middot; дуб</td></tr>
+              <tr><td>Сидр</td><td>Яблоко &times;14</td><td>7 мин</td><td>&mdash;</td><td>3 года &middot; любая бочка</td></tr>
+              <tr><td>Яблочный ликёр</td><td>Яблоко &times;12, сахар &times;4, тростник &times;2</td><td>16 мин</td><td>3 раза</td><td>6 лет &middot; акация</td></tr>
+              <tr><td>Виски</td><td>Сахар &times;4, тростник &times;2, пшеница &times;6</td><td>14 мин</td><td>2 раза</td><td>18 лет &middot; ель</td></tr>
+              <tr><td>Ром</td><td>Тростник &times;18, сахар &times;2</td><td>6 мин</td><td>2 раза</td><td>14 лет &middot; дуб</td></tr>
+              <tr><td>Чача</td><td>Сахар &times;7, ягоды &times;20</td><td>15 мин</td><td>&mdash;</td><td>8 лет &middot; берёза</td></tr>
+              <tr><td>Текила</td><td>Кактус &times;14</td><td>15 мин</td><td>2 раза</td><td>12 лет &middot; берёза</td></tr>
+              <tr><td>Джин</td><td>Яблоко &times;1, пшеница &times;9, синий цветок &times;6</td><td>6 мин</td><td>2 раза</td><td>&mdash;</td></tr>
+              <tr><td>Русская водка</td><td>Картофель &times;10</td><td>15 мин</td><td>3 раза</td><td>&mdash;</td></tr>
+              <tr><td>Грибная водка</td><td>Картофель &times;10, мухомор &times;3, коричневый гриб &times;3</td><td>18 мин</td><td>5 раз</td><td>&mdash;</td></tr>
+              <tr><td>Абсент</td><td>Трава &times;15</td><td>3 мин</td><td>6 раз</td><td>&mdash;</td></tr>
+              <tr><td>Энерген</td><td>Светящиеся ягоды &times;4, сладкие ягоды &times;2, сахар &times;2</td><td>6 мин</td><td>&mdash;</td><td>2 года &middot; берёза</td></tr>
+              <tr><td>Алиночка</td><td>Сахар &times;10, сладкие ягоды &times;4</td><td>4 мин</td><td>&mdash;</td><td>2 года &middot; берёза</td></tr>
+              <tr><td>Квас</td><td>Хлеб &times;5, бутылочка мёда &times;1</td><td>5 мин</td><td>&mdash;</td><td>1 год &middot; ель</td></tr>
+              <tr><td>Глинтвейн</td><td>Сахар &times;4, палки &times;2, светящиеся ягоды &times;5, сладкие ягоды &times;10</td><td>5 мин</td><td>&mdash;</td><td>&mdash;</td></tr>
+              <tr><td>Яичный ликёр</td><td>Яйца &times;5, сахар &times;2, ведро молока &times;1</td><td>2 мин</td><td>&mdash;</td><td>3 года &middot; любая бочка</td></tr>
+              <tr><td>Огуречный рассол</td><td>Морские огурцы &times;5</td><td>3 мин</td><td>&mdash;</td><td>1 год &middot; любая бочка</td></tr>
+              <tr><td>Грибной чай</td><td>Мухомор &times;2, коричневый гриб &times;2, сахар &times;1</td><td>8 мин</td><td>&mdash;</td><td>4 года &middot; любая бочка</td></tr>
+              <tr><td>Кофе</td><td>Какао-бобы &times;12, ведро молока &times;1</td><td>2 мин</td><td>&mdash;</td><td>&mdash;</td></tr>
+              <tr><td>Картофельный суп</td><td>Картофель &times;5, трава &times;3</td><td>8 мин</td><td>&mdash;</td><td>&mdash;</td></tr>
+              <tr><td>Минеральная вода</td><td>Кальцит &times;5, диорит &times;5</td><td>5 мин</td><td>&mdash;</td><td>&mdash;</td></tr>
+              <tr><td>Тархун</td><td>Блок мха &times;1, сахар &times;2, трава &times;5, папоротник &times;3</td><td>10 мин</td><td>&mdash;</td><td>&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="rule-note" style="margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;color:var(--sub);font-size:.88rem">Совет тавернщика: чем точнее рецепт и правильнее древесина бочки, тем выше качество напитка &mdash; и мягче последствия дегустации.</p>
+      </section>
+
+      <section class="wiki-sec" id="w-9">
+        <span class="rs-num">09</span><h2>Гайд новичка</h2>
+        <p class="rs-intro">Чек-лист первого дня в мире. Отмечайте выполненное &mdash; прогресс сохранится в вашем браузере.</p>
+        <div class="day1">
+          <div class="progress" id="day1Progress">Выполнено: 0 из 7</div>
+          <ul id="day1List">
+            <li><input type="checkbox" id="d1-1"><label for="d1-1"><span>Подать заявку на сервер в Discord</span></label></li>
+            <li><input type="checkbox" id="d1-2"><label for="d1-2"><span>Дождаться одобрения и зайти на play.cloudyworlds.ru</span></label></li>
+            <li><input type="checkbox" id="d1-3"><label for="d1-3"><span>Настроить голосовой чат PlasmoVoice (клавиша V)</span></label></li>
+            <li><input type="checkbox" id="d1-4"><label for="d1-4"><span>Поставить свой скин командой /skin set</span></label></li>
+            <li><input type="checkbox" id="d1-5"><label for="d1-5"><span>Прочитать правила сервера</span></label></li>
+            <li><input type="checkbox" id="d1-6"><label for="d1-6"><span>Найти или занять первое жильё</span></label></li>
+            <li><input type="checkbox" id="d1-7"><label for="d1-7"><span>Заглянуть в словарь мира, чтобы понимать местный сленг</span></label></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="wiki-sec" id="w-10">
+        <span class="rs-num">10</span><h2>Словарь мира</h2>
+        <p class="rs-intro">Слова, которые вы услышите в первый же вечер. Чтобы не переспрашивать.</p>
+        <dl class="glossary">
+          <div class="gterm"><dt>Сезон</dt><dd>Жизненный цикл мира: от полугода до года. Свой лор, свои механики, свой финал &mdash; затем мир обновляется.</dd></div>
+          <div class="gterm"><dt>Хроники</dt><dd>Официальная летопись событий сервера. Пишется по итогам сезонов и хранится на вики.</dd></div>
+          <div class="gterm"><dt>Проходка</dt><dd>Право играть на сервере. Бесплатная &mdash; через заявку в Discord, платная &mdash; через магазин без ожидания.</dd></div>
+          <div class="gterm"><dt>Медийка</dt><dd>Статус контент-мейкера с ролью, привилегией и правом публиковаться в канале «Медиа».</dd></div>
+          <div class="gterm"><dt>Сцена</dt><dd>Отыгрываемая RP-ситуация между игроками. В чужую сцену входят по её правилам &mdash; или проходят мимо.</dd></div>
+          <div class="gterm"><dt>Смотрители</dt><dd>Команда сервера: следят за порядком и стабильностью, но не управляют обществом &mdash; это дело игроков.</dd></div>
+          <div class="gterm"><dt>Полу-RP</dt><dd>Формат сервера: отыгрыш существует и уважается, но участие в нём &mdash; личный выбор каждого.</dd></div>
+        </dl>
+      </section>
+
+      <section class="wiki-sec" id="w-11">
+        <span class="rs-num">11</span><h2>Хроники сезонов</h2>
+        <p class="rs-intro">Краткая история мира &mdash; от истоков до текущего дня. Летопись пополняется по итогам каждого сезона.</p>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-era">Пролог &middot; до 2026</div>
+            <h4>Эпоха Axolotl</h4>
+            <p>Сервер жил под другим именем: первые государства, первый почти-дефолт и постройки, которые ветераны вспоминают до сих пор. Этот опыт стал фундаментом Cloudy Worold 2.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-era">Сезон I &middot; скоро начнётся</div>
+            <h4>«Первые облака»</h4>
+            <p>Рождение Cloudy Worold 2: новый мир, новый лор и общество, которое игроки собирают с нуля. Чем закончится первый сезон &mdash; решаете вы. Следите за сюжетом в Discord.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-era">Сезон II &middot; ???</div>
+            <h4>Название засекречено</h4>
+            <p>Лор следующего сезона будет раскрыт ближе к финалу первого. Наследие текущего мира частично перейдёт в новый.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <nav class="docnav">
+    <a href="index.html">&larr; На главную</a>
+    <a class="next" href="rules.html">Правила сервера &rarr;</a>
+  </nav>
+</main>
+
+<footer>
+  <div class="foot">
+    <div class="about">
+      <a class="logo" href="index.html#top">Cloudy <b>Worold 2</b></a>
+      <p>Сезонный полу-RP Minecraft-сервер с собственным лором. Каждый сезон &mdash; новый мир и новая история.</p>
+    </div>
+    <div>
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html#world">Мир</a></li>
+        <li><a href="rules.html">Правила</a></li>
+        <li><a href="index.html#crew">Команда</a></li>
+        <li><a href="index.html#join">Как зайти</a></li>
+    <li><a href="wiki.html">Вики</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Связь</h4>
+      <ul>
+        <li><a href="https://discord.gg/DKUdvZEhP" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="https://www.twitch.tv/subertoples" target="_blank" rel="noopener">Twitch</a></li>
+        <li><a href="https://www.youtube.com/@thedavka8776" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="https://cloudyworlds.ru/" target="_blank" rel="noopener">cloudyworlds.ru</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>&copy; <span id="yr"></span> Cloudy Worold 2</span>
+    <span>Minecraft &mdash; товарный знак Mojang Synergies AB. Сервер не аффилирован с Mojang.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var recipeSearch = document.getElementById('recipeSearch');
+  var recipeRows = Array.from(document.querySelectorAll('#recipeTable tbody tr'));
+  recipeSearch.addEventListener('input', function () {
+    var q = recipeSearch.value.trim().toLowerCase();
+    recipeRows.forEach(function (row) {
+      row.hidden = q.length > 0 && row.textContent.toLowerCase().indexOf(q) === -1;
+    });
+  });
+
+  var day1Items = Array.from(document.querySelectorAll('#day1List input[type=checkbox]'));
+  var progressEl = document.getElementById('day1Progress');
+  var STORAGE_KEY = 'cw2-day1-checklist';
+
+  function updateProgress() {
+    var done = day1Items.filter(function (cb) { return cb.checked; }).length;
+    progressEl.textContent = 'Выполнено: ' + done + ' из ' + day1Items.length;
+    day1Items.forEach(function (cb) {
+      cb.closest('li').classList.toggle('done', cb.checked);
+    });
+  }
+
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    day1Items.forEach(function (cb) {
+      if (saved[cb.id]) cb.checked = true;
+    });
+  } catch (e) {}
+
+  day1Items.forEach(function (cb) {
+    cb.addEventListener('change', function () {
+      try {
+        var state = {};
+        day1Items.forEach(function (c) { state[c.id] = c.checked; });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
