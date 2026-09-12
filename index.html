@@ -75,8 +75,15 @@
   .copy:hover{background:rgba(108,182,255,.24)}
   .hero-cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:640px}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media (max-width:960px){.tiles{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.tiles{grid-template-columns:1fr}}
+  .tile.disabled{cursor:default;opacity:.55}
+  .tile.disabled:hover{transform:none;border-color:var(--line);box-shadow:none}
+  .tile.disabled:hover h3 span{transform:none}
+  .tile .soon{position:absolute;top:12px;right:12px;z-index:2;font-family:'JetBrains Mono',monospace;
+    font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);
+    border:1px solid var(--line);border-radius:100px;padding:3px 9px;background:rgba(8,13,25,.6)}
   .tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
     aspect-ratio:3/4;border-radius:16px;overflow:hidden;text-decoration:none;
     border:1px solid var(--line);transition:transform .25s,border-color .25s,box-shadow .3s}
@@ -223,6 +230,16 @@
           <span class="art"></span>
           <span class="body"><span class="idx">Знание</span><h3>Вики <span>&#8599;</span></h3><p>Лор, гайды и хроники государств.</p></span>
         </a>
+        <div class="tile disabled">
+          <span class="soon">Скоро</span>
+          <span class="art"></span>
+          <span class="body"><span class="idx">Навигация</span><h3>Онлайн-карта</h3><p>Мир в браузере, в реальном времени.</p></span>
+        </div>
+        <div class="tile disabled">
+          <span class="soon">Скоро</span>
+          <span class="art"></span>
+          <span class="body"><span class="idx">Поддержка</span><h3>Магазин</h3><p>Косметика и вклад в сервер. Без преимуществ.</p></span>
+        </div>
       </div>
     </div>
   </section>
