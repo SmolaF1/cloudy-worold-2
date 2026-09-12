@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CloudyWorld — сезонный Minecraft-сервер</title>
+<meta name="description" content="CloudyWorld — сезонное survival-выживание с собственным лором. Игроки сами решают, какие системы будут в этом мире.">
+<link rel="icon" href="data:,">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #D9E5E8;
+    --bg-raised: #EBF2F3;
+    --card: #FFFFFF;
+    --ink: #16262B;
+    --ink-soft: #4C6067;
+    --line: #B6C7CC;
+    --accent: #3F8C4F;
+    --accent-ink: #0F2A14;
+    --accent2: #7C5CC4;
+    --danger: #B5482F;
+    --sky-top: #7FB2D8;
+    --sky-bottom: #C9E3EE;
+    --cloud: #FFFFFF;
+    --cloud-shade: #C6D6DC;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10181B;
+      --bg-raised: #182124;
+      --card: #1D2729;
+      --ink: #E4EDEE;
+      --ink-soft: #90A3A8;
+      --line: #2C393D;
+      --accent: #62B672;
+      --accent-ink: #0C1F0F;
+      --accent2: #A78AE0;
+      --danger: #D97056;
+      --sky-top: #1A2E3E;
+      --sky-bottom: #2C4A55;
+      --cloud: #C9D6DA;
+      --cloud-shade: #7C8C92;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #10181B;
+    --bg-raised: #182124;
+    --card: #1D2729;
+    --ink: #E4EDEE;
+    --ink-soft: #90A3A8;
+    --line: #2C393D;
+    --accent: #62B672;
+    --accent-ink: #0C1F0F;
+    --accent2: #A78AE0;
+    --danger: #D97056;
+    --sky-top: #1A2E3E;
+    --sky-bottom: #2C4A55;
+    --cloud: #C9D6DA;
+    --cloud-shade: #7C8C92;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Karla', system-ui, -apple-system, sans-serif;
+    padding: 0 20px 64px;
+    display: flex;
+    justify-content: center;
+  }
+
+  main { width: 100%; max-width: 940px; }
+
+  .pixel { font-family: 'Press Start 2P', 'Karla', monospace; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  header.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 0 16px;
+    flex-wrap: wrap;
+  }
+
+  header.top .wordmark { font-size: 0.62rem; line-height: 1; }
+  header.top .demo-flag {
+    font-size: 0.66rem;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    border-radius: 3px;
+    padding: 4px 8px;
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg-raised);
+  }
+
+  .sky-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(var(--sky-top), var(--sky-bottom));
+  }
+
+  .sky-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-copy {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 20px 22px 22px;
+    background: linear-gradient(to top, rgba(6,14,10,0.55), rgba(6,14,10,0));
+  }
+
+  .hero-copy h1 {
+    color: #fff;
+    font-size: clamp(1.1rem, 3.4vw, 1.9rem);
+    line-height: 1.5;
+    margin: 0;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.35);
+  }
+
+  .hero-copy p {
+    color: rgba(255,255,255,0.88);
+    max-width: 50ch;
+    margin: 14px 0 0;
+    font-size: 0.98rem;
+  }
+
+  .status-pill {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(6,14,10,0.55);
+    border-radius: 100px;
+    padding: 6px 12px 6px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #fff;
+  }
+
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #63d17a; box-shadow: 0 0 0 3px rgba(99,209,122,0.25); }
+
+  .example-tag {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    color: rgba(255,255,255,0.85);
+    background: rgba(6,14,10,0.55);
+    border-radius: 100px;
+    padding: 6px 11px;
+  }
+
+  /* ---------- IP box ---------- */
+
+  .ip-bar {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 14px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--card);
+  }
+
+  .ip-bar .field { flex: 1; padding: 14px 16px; min-width: 0; }
+  .ip-bar .label { font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+  .ip-bar .value { margin-top: 4px; font-size: 1.02rem; overflow-wrap: break-word; }
+  .ip-bar .divider { width: 1px; background: var(--line); }
+
+  .ip-bar button {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .ip-bar button:hover { filter: brightness(1.05); }
+  .ip-bar button:focus-visible { outline: 2px solid var(--accent2); outline-offset: -2px; }
+
+  /* ---------- sections ---------- */
+
+  section { padding: 48px 0 0; }
+  .section-head { max-width: 60ch; margin-bottom: 22px; }
+  .section-head h2 { font-size: 1.05rem; margin: 8px 0 0; line-height: 1.6; }
+  .section-head p { color: var(--ink-soft); margin: 10px 0 0; font-size: 0.94rem; }
+
+  /* modes */
+
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 720px) { .modes { grid-template-columns: 1fr; } }
+
+  .mode-card {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px;
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mode-card.featured { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+  .mode-card .badge {
+    align-self: flex-start;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--accent2);
+    color: #fff;
+  }
+
+  .mode-card h3 { font-size: 1.02rem; font-family: 'Karla', sans-serif; font-weight: 700; }
+  .mode-card p { margin: 0; color: var(--ink-soft); font-size: 0.88rem; }
+
+  /* features */
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  @media (max-width: 720px) { .features { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 460px) { .features { grid-template-columns: 1fr; } }
+
+  .feature {
+    background: var(--card);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .feature .k { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+  .feature h3 { font-size: 0.94rem; font-family: 'Karla', sans-serif; font-weight: 700; }
+  .feature p { margin: 0; font-size: 0.84rem; color: var(--ink-soft); }
+
+  /* join steps */
+
+  .steps { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+  .step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .step .num { font-family: 'Press Start 2P', monospace; font-size: 0.9rem; color: var(--accent); }
+  .step h3 { font-size: 0.96rem; font-family: 'Karla', sans-serif; font-weight: 700; }
+  .step p { margin: 5px 0 0; color: var(--ink-soft); font-size: 0.88rem; max-width: 56ch; }
+
+  /* rules + staff */
+
+  .split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: start; }
+  @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+
+  .rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .rules li {
+    display: flex; gap: 10px; align-items: baseline;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    font-size: 0.92rem;
+  }
+  .rules .rule-no { font-family: 'JetBrains Mono', monospace; color: var(--ink-soft); font-size: 0.78rem; }
+
+  .staff { display: flex; flex-direction: column; gap: 0; }
+  .staff-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.9rem;
+  }
+  .staff-row .role { color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* discord cta */
+
+  .cta {
+    margin-top: 52px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 24px;
+    background: var(--bg-raised);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cta h2 { font-size: 1.05rem; }
+  .cta p { margin: 6px 0 0; color: var(--ink-soft); font-size: 0.88rem; }
+
+  .cta a.btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    background: var(--accent2);
+    color: #fff;
+    border-radius: 4px;
+    padding: 12px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <header class="top">
+    <span class="wordmark pixel">CLOUDYWORLD</span>
+    <span class="demo-flag mono">демо-данные</span>
+  </header>
+
+  <div class="hero">
+    <div class="sky-wrap" id="skyWrap">
+      <canvas id="skyCanvas"></canvas>
+      <div class="status-pill"><span class="status-dot"></span>84 / 200 онлайн</div>
+      <div class="example-tag">пример данных</div>
+      <div class="hero-copy">
+        <h1 class="pixel">CLOUDYWORLD</h1>
+        <p>CloudyWorld &mdash; сезонное выживание с собственным лором. Хотите &mdash; стройте государство, хотите &mdash; живите отшельником. Какие системы будут в этом мире, решают сами игроки.</p>
+      </div>
+    </div>
+
+    <div class="ip-bar">
+      <div class="field">
+        <div class="label">IP сервера &middot; Java</div>
+        <div class="value mono" id="ipValue">play.cloudyworld2.net</div>
+      </div>
+      <div class="divider"></div>
+      <div class="field" style="flex: 0 0 auto;">
+        <div class="label">Версия</div>
+        <div class="value mono">1.21.4</div>
+      </div>
+      <button type="button" id="copyBtn">Копировать IP</button>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Устройство мира</span>
+      <h2>Каждый сезон &mdash; новая история</h2>
+      <p>Сезон живёт от полугода до года: свой лор, свои механики и свои герои. А как устроено общество этого мира &mdash; решают игроки.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><span class="k">lore</span><h3>Собственный лор</h3><p>У мира есть история, загадки и сезонный сюжет. События сервера складываются в хроники, которые пишутся вместе с вами.</p></div>
+      <div class="feature"><span class="k">rp</span><h3>Полу-RP без принуждения</h3><p>Отыгрыш &mdash; по желанию. Можно жить персонажем с историей, а можно просто выживать. Обе роли равноправны.</p></div>
+      <div class="feature"><span class="k">society</span><h3>Свобода систем</h3><p>Правительство, торговый союз или ничего &mdash; игроки сами придумывают и внедряют устройство мира. Или отвергают его.</p></div>
+      <div class="feature"><span class="k">mechanics</span><h3>Свои механики</h3><p>Ванильная основа плюс аккуратные механики сезона: они добавляют глубину, не ломая дух выживания.</p></div>
+      <div class="feature"><span class="k">voice</span><h3>Голосовой чат</h3><p>Слышно тех, кто рядом. Переговоры на границе, разговоры у костра и тишина глубоких пещер.</p></div>
+      <div class="feature"><span class="k">social</span><h3>Живое взаимодействие</h3><p>Союзы и конфликты, торговля и дипломатия, ярмарки и суды &mdash; главный контент сервера рождается между людьми.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Режим</span>
+      <h2>Только survival &mdash; без ответвлений</h2>
+      <p>Один мир на всех, одна карта, один способ в нём жить.</p>
+    </div>
+    <div class="modes">
+      <div class="mode-card featured" style="grid-column: 1 / -1;">
+        <span class="badge">единственный режим</span>
+        <h3>Survival</h3>
+        <p>Классическое выживание на общей карте 10 000&times;10 000. Города, кланы и застолблённые участки защищены от гриферства.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Что уже настроено</span>
+      <h2>Техническая база сезона</h2>
+      <p>Минимум внешних систем &mdash; ровно столько, чтобы играть было честно, а остальное решают сами игроки.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><span class="k">claims</span><h3>Защита построек</h3><p>Заяви участок &mdash; чужие блоки на нём не ломаются и не крадутся, даже без твоего ведома.</p></div>
+      <div class="feature"><span class="k">events</span><h3>Сезонные ивенты</h3><p>Рейд-боссы и командные события выходят на карту раз в сезон и остаются частью его лора и хроник.</p></div>
+      <div class="feature"><span class="k">crossplay</span><h3>Java + Bedrock</h3><p>Подключение с консоли и телефона через Geyser, порт 19132 для Bedrock-версии.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Маршрут</span>
+      <h2>Четыре шага до первой ночи</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num pixel">1</span>
+        <div><h3>Войдите через Discord</h3><p>Откройте личный кабинет и авторизуйтесь одним кликом через Discord.</p></div>
+      </div>
+      <div class="step">
+        <span class="num pixel">2</span>
+        <div><h3>Прочитайте правила</h3><p>Они короткие и написаны для людей &mdash; свод правил.</p></div>
+      </div>
+      <div class="step">
+        <span class="num pixel">3</span>
+        <div><h3>Подайте заявку</h3><p>Прямо в кабинете ответьте на пару вопросов о себе. Отвечаем быстро.</p></div>
+      </div>
+      <div class="step">
+        <span class="num pixel">4</span>
+        <div><h3>Заходите в мир</h3><p>После одобрения роль игрока выдаётся автоматически, а решение придёт в Discord.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="split">
+      <div>
+        <div class="section-head">
+          <span class="eyebrow">Правила</span>
+          <h2>Коротко о главном</h2>
+        </div>
+        <ul class="rules">
+          <li><span class="rule-no mono">01</span><span>Гриферство и чит-клиенты &mdash; бан без предупреждения.</span></li>
+          <li><span class="rule-no mono">02</span><span>Постройки за пределами заявленной территории могут снести под общую застройку.</span></li>
+          <li><span class="rule-no mono">03</span><span>Русский и английский &mdash; общие языки чата, остальное в личку.</span></li>
+          <li><span class="rule-no mono">04</span><span>PvP только в дикой зоне &mdash; в городах оно выключено.</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-head">
+          <span class="eyebrow">Команда</span>
+          <h2>Кто на связи</h2>
+        </div>
+        <div class="staff">
+          <div class="staff-row"><span class="role">owner</span><span>1 человек</span></div>
+          <div class="staff-row"><span class="role">admin</span><span>2 человека</span></div>
+          <div class="staff-row"><span class="role">moderator</span><span>3 человека</span></div>
+          <div class="staff-row"><span class="role">helper</span><span>4 человека</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div>
+      <h2 class="pixel" style="font-size: 0.8rem;">DISCORD СЕРВЕРА</h2>
+      <p>Заявки на город, отчёты о гриферах и объявления о сезонах &mdash; всё там.</p>
+    </div>
+    <a class="btn" href="#" onclick="return false;">discord.gg/cloudyworld2</a>
+  </div>
+
+  <footer>
+    <span>CloudyWorld &mdash; сезонное survival-выживание</span>
+    <span class="mono">IP, правила и состав команды &mdash; примерные, замени на свои</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var canvas = document.getElementById('skyCanvas');
+  var wrap = document.getElementById('skyWrap');
+  var ctx = canvas.getContext('2d');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = 0, H = 0, dpr = Math.max(1, window.devicePixelRatio || 1);
+
+  function resize() {
+    var rect = wrap.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function rand(seed) {
+    var x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+
+  var puffCount = 26;
+  var puffs = [];
+  for (var i = 0; i < puffCount; i++) {
+    puffs.push({
+      x: rand(i * 7.3),
+      y: 0.05 + rand(i * 3.1) * 0.55,
+      cells: 3 + Math.floor(rand(i * 5.9) * 4)
+    });
+  }
+
+  function drawBlockyCloud(px, py, cells, cell, top, shade) {
+    var pattern = [
+      [0,1,1,0],
+      [1,1,1,1],
+      [1,1,1,1],
+      [0,1,1,0]
+    ];
+    for (var r = 0; r < pattern.length; r++) {
+      for (var c = 0; c < cells; c++) {
+        var on = pattern[r][c % 4];
+        if (!on) continue;
+        var x = px + c * cell;
+        var y = py + r * cell;
+        ctx.fillStyle = r >= pattern.length - 1 ? shade : top;
+        ctx.fillRect(x, y, cell + 0.5, cell + 0.5);
+      }
+    }
+  }
+
+  var t = 0;
+  function frame() {
+    var css = getComputedStyle(document.documentElement);
+    var cloudTop = css.getPropertyValue('--cloud').trim();
+    var cloudShade = css.getPropertyValue('--cloud-shade').trim();
+    ctx.clearRect(0, 0, W, H);
+
+    var cell = Math.max(4, Math.round(H * 0.035));
+
+    puffs.forEach(function (p) {
+      var offset = (t * 0.03 + p.x) % 1.3;
+      var px = (offset - 0.15) * W;
+      var py = p.y * H;
+      drawBlockyCloud(px, py, p.cells, cell, cloudTop, cloudShade);
+    });
+
+    if (!reduceMotion) {
+      t += 0.02;
+      requestAnimationFrame(frame);
+    }
+  }
+
+  window.addEventListener('resize', function () { resize(); });
+  resize();
+  frame();
+
+  var copyBtn = document.getElementById('copyBtn');
+  var ipValue = document.getElementById('ipValue');
+  copyBtn.addEventListener('click', function () {
+    var text = ipValue.textContent.trim();
+    var done = function () {
+      var old = copyBtn.textContent;
+      copyBtn.textContent = 'Скопировано';
+      setTimeout(function () { copyBtn.textContent = old; }, 1400);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(done);
+    } else {
+      done();
+    }
+  });
+})();
+</script>
+</body>
+</html>
