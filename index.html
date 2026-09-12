@@ -75,8 +75,7 @@
   .copy:hover{background:rgba(108,182,255,.24)}
   .hero-cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  @media (max-width:960px){.tiles{grid-template-columns:1fr 1fr}}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:640px}
   @media (max-width:520px){.tiles{grid-template-columns:1fr}}
   .tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
     aspect-ratio:3/4;border-radius:16px;overflow:hidden;text-decoration:none;
@@ -223,14 +222,6 @@
         <a class="tile" href="wiki.html">
           <span class="art"></span>
           <span class="body"><span class="idx">Знание</span><h3>Вики <span>&#8599;</span></h3><p>Лор, гайды и хроники государств.</p></span>
-        </a>
-        <a class="tile" href="https://cloudyworlds.ru/map" target="_blank" rel="noopener">
-          <span class="art"></span>
-          <span class="body"><span class="idx">Навигация</span><h3>Онлайн-карта <span>&#8599;</span></h3><p>Мир в браузере, в реальном времени.</p></span>
-        </a>
-        <a class="tile" href="https://cloudyworlds.ru/store" target="_blank" rel="noopener">
-          <span class="art"></span>
-          <span class="body"><span class="idx">Поддержка</span><h3>Магазин <span>&#8599;</span></h3><p>Косметика и вклад в сервер. Без преимуществ.</p></span>
         </a>
       </div>
     </div>
