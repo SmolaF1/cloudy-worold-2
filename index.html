@@ -10,67 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
 <style>
-  :root{
-    --bg:#0A1120;
-    --bg2:#0E1830;
-    --panel:#111C36;
-    --panel2:#152140;
-    --line:rgba(150,175,220,.16);
-    --line-gold:rgba(232,180,76,.4);
-    --text:#EDF2FB;
-    --sub:#93A2BE;
-    --gold:#E8B44C;
-    --gold-soft:#F4D28A;
-    --sky:#6CB6FF;
-    --display:'Unbounded',sans-serif;
-    --body:'Onest',sans-serif;
-    --pad:clamp(20px,8vw,140px);
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--bg);color:var(--text);font-family:var(--body);
-    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  }
-  a{color:inherit}
-  img{max-width:100%}
-  ::selection{background:var(--gold);color:#22160a}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
-  .wrap{max-width:960px;margin:0 auto}
-
-  /* ---------- header ---------- */
-
-  header{
-    position:sticky;top:0;z-index:100;height:76px;
-    display:flex;align-items:center;justify-content:space-between;gap:18px;
-    padding:0 var(--pad);
-    background:linear-gradient(180deg,rgba(8,13,25,.92),rgba(8,13,25,.7));
-    backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
-  }
-  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;
-    font-family:var(--display);font-weight:700;font-size:1.05rem}
-  .logo b{color:var(--gold)}
-  .nav{display:flex;list-style:none;gap:4px;margin:0;padding:0}
-  .nav a{text-decoration:none;color:var(--sub);font-weight:500;font-size:.92rem;
-    padding:9px 14px;border-radius:9px;transition:color .2s,background .2s}
-  .nav a:hover{color:var(--text);background:rgba(108,182,255,.08)}
-  @media (max-width:860px){ .nav{display:none} }
-
-  .btn{
-    position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    font-family:var(--body);font-weight:700;font-size:.92rem;
-    padding:13px 24px;border-radius:11px;border:none;cursor:pointer;text-decoration:none;
-    color:#22160a;background:linear-gradient(160deg,var(--gold-soft),var(--gold) 55%,#C89238);
-    box-shadow:0 10px 26px rgba(232,180,76,.28), inset 0 1px 0 rgba(255,255,255,.5);
-    transition:transform .18s,box-shadow .25s;overflow:hidden;white-space:nowrap;
-  }
-  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(232,180,76,.4), inset 0 1px 0 rgba(255,255,255,.5)}
-  .btn.dark{color:var(--text);background:rgba(21,33,64,.85);border:1px solid var(--line);box-shadow:none}
-  .btn.dark:hover{border-color:var(--line-gold);background:rgba(26,40,76,.95);transform:translateY(-2px)}
-  .btn.small{padding:10px 16px;font-size:.82rem}
-
   /* ---------- hero ---------- */
 
   .hero{position:relative;overflow:hidden;padding:96px var(--pad) 90px;text-align:center}
@@ -133,20 +74,6 @@
     padding:9px 14px;cursor:pointer;transition:background .2s}
   .copy:hover{background:rgba(108,182,255,.24)}
   .hero-cta{margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-
-  /* ---------- sections ---------- */
-
-  section{position:relative;padding:96px var(--pad)}
-  .sec-head{max-width:680px;margin-bottom:48px}
-  .sec-head.center{margin-inline:auto;text-align:center}
-  .tag{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:500;
-    font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-  .tag::before{content:'';width:24px;height:1px;background:var(--gold)}
-  .sec-head.center .tag::after{content:'';width:24px;height:1px;background:var(--gold)}
-  h2{font-family:var(--display);font-weight:700;letter-spacing:.01em;line-height:1.25;
-    font-size:clamp(1.35rem,3vw,2.1rem);margin:0}
-  .sec-sub{margin-top:14px;color:var(--sub);font-size:1rem;max-width:56ch}
-  .sec-head.center .sec-sub{margin-inline:auto}
 
   .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
   @media (max-width:960px){.tiles{grid-template-columns:1fr 1fr}}
@@ -220,24 +147,6 @@
   .final h2{max-width:20ch;margin:0 auto}
   .final p{color:var(--sub);margin:16px auto 30px;max-width:46ch}
   .final .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-
-  footer{border-top:1px solid var(--line);background:#080D19;padding:56px var(--pad) 0}
-  .foot{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:32px}
-  @media (max-width:760px){.foot{grid-template-columns:1fr 1fr}}
-  @media (max-width:480px){.foot{grid-template-columns:1fr}}
-  .foot .about p{color:var(--sub);font-size:.9rem;max-width:300px;margin-top:12px}
-  .foot h4{font-family:var(--display);font-weight:500;font-size:.62rem;letter-spacing:.24em;
-    text-transform:uppercase;color:var(--gold);margin:0 0 16px}
-  .foot ul{list-style:none;display:grid;gap:9px;margin:0;padding:0}
-  .foot a{text-decoration:none;font-size:.9rem;color:var(--sub);transition:color .2s}
-  .foot a:hover{color:var(--text)}
-  .foot-bottom{max-width:960px;margin:44px auto 0;border-top:1px solid var(--line);
-    padding:20px 0 26px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    font-size:.76rem;color:#66738F}
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:.01ms !important;animation-iteration-count:1 !important}
-  }
 </style>
 </head>
 <body>
@@ -306,7 +215,7 @@
         <h2>Сервисы мира</h2>
       </div>
       <div class="tiles">
-        <a class="tile" href="https://cloudyworlds.ru/rules">
+        <a class="tile" href="rules.html">
           <span class="art"></span>
           <span class="body"><span class="idx">Документ</span><h3>Правила <span>&#8599;</span></h3><p>Свод законов мира. Короткий и понятный.</p></span>
         </a>
@@ -338,6 +247,7 @@
         <li><span class="no mono">03</span><span>Русский и английский &mdash; общие языки чата, остальное в личку.</span></li>
         <li><span class="no mono">04</span><span>PvP только в дикой зоне &mdash; в городах оно выключено.</span></li>
       </ul>
+      <a class="btn dark small" href="rules.html" style="margin-top:20px">Читать все правила &#8599;</a>
 
       <div class="sec-head center" id="crew" style="margin-top:56px">
         <p class="tag">Смотрители</p>
@@ -357,7 +267,7 @@
       </div>
       <div class="path">
         <div class="pstep"><h3>Войдите через Discord</h3><p>Откройте <a href="https://cloudyworlds.ru/account.html">личный кабинет</a> и авторизуйтесь одним кликом через Discord.</p></div>
-        <div class="pstep"><h3>Прочитайте правила</h3><p>Они короткие и написаны для людей &mdash; <a href="https://cloudyworlds.ru/rules">свод правил</a>.</p></div>
+        <div class="pstep"><h3>Прочитайте правила</h3><p>Они короткие и написаны для людей &mdash; <a href="rules.html">свод правил</a>.</p></div>
         <div class="pstep"><h3>Подайте заявку</h3><p>Прямо в кабинете ответьте на пару вопросов о себе. Отвечаем быстро.</p></div>
         <div class="pstep"><h3>Заходите в мир</h3><p>После одобрения роль игрока выдаётся автоматически, а решение придёт в Discord.</p></div>
       </div>

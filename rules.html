@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Правила — CloudyWorld</title>
+<meta name="description" content="Полный свод правил сервера CloudyWorld: общение, PvP, территории, полу-RP, государства игроков и система наказаний.">
+<meta name="theme-color" content="#0A1120">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<style>
+  .page-head{padding:56px var(--pad) 0}
+  .page-head h1{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin:10px 0 0}
+  .page-head .meta{margin-top:16px;color:var(--sub);font-size:.9rem}
+  .page-head .meta b{color:var(--gold-soft);font-weight:600}
+
+  .rulebook{padding:48px var(--pad) 110px;display:grid;grid-template-columns:260px 1fr;gap:48px;align-items:start}
+  @media (max-width:900px){.rulebook{grid-template-columns:1fr}}
+
+  .side{position:sticky;top:96px;display:flex;flex-direction:column;gap:28px}
+  @media (max-width:900px){.side{position:static}}
+  .side-nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;
+    border-left:1px solid var(--line)}
+  .side-nav a{display:block;text-decoration:none;color:var(--sub);font-size:.86rem;
+    padding:8px 0 8px 16px;border-left:2px solid transparent;margin-left:-1px;transition:color .2s,border-color .2s}
+  .side-nav a:hover{color:var(--text)}
+  .side-nav .n{font-family:'JetBrains Mono',monospace;color:var(--gold);margin-right:8px;font-size:.78rem}
+
+  .rule-search{width:100%;font-family:var(--body);font-size:.88rem;color:var(--text);
+    background:rgba(17,28,54,.7);border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+  .rule-search::placeholder{color:var(--sub)}
+  .rule-search:focus{outline:none;border-color:var(--gold)}
+
+  .legend-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--sub);margin:0 0 10px}
+  .legend ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:.84rem;color:var(--sub)}
+
+  .pen{display:inline-flex;align-items:center;white-space:nowrap;font-family:'JetBrains Mono',monospace;
+    font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:100px;
+    border:1px solid currentColor}
+  .pen.warn{color:var(--sub)}
+  .pen.mute{color:var(--sky)}
+  .pen.tempban{color:var(--gold)}
+  .pen.ban{color:var(--danger)}
+
+  .rule-sec{margin-bottom:56px;scroll-margin-top:96px}
+  .rule-sec .rs-head{margin-bottom:6px}
+  .rule-sec .rs-num{font-family:var(--display);color:var(--gold);font-size:.8rem;margin-right:10px}
+  .rule-sec h2{display:inline;font-size:clamp(1.1rem,2.2vw,1.5rem)}
+  .rule-sec .rs-intro{color:var(--sub);margin:10px 0 0;font-size:.94rem;max-width:60ch}
+
+  .rule-list{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column}
+  .rule{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:start;
+    padding:16px 0;border-bottom:1px solid var(--line)}
+  .rule .rn{font-family:var(--display);color:var(--gold);font-size:.84rem;padding-top:1px}
+  .rule h4{margin:0;font-size:.94rem;font-weight:700;font-family:var(--body);color:var(--text)}
+  .rule p{margin:6px 0 0;color:var(--sub);font-size:.86rem}
+  .rule .pen{align-self:start}
+  .rule[hidden]{display:none}
+
+  .rule-note{margin-top:28px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;
+    background:var(--panel);color:var(--sub);font-size:.88rem}
+
+  .appeal-cta{margin:0 var(--pad) 64px;background:linear-gradient(165deg,var(--panel2),var(--panel));
+    border:1px solid var(--line-gold);border-radius:18px;padding:32px 30px;text-align:center}
+  .appeal-cta .tag{justify-content:center}
+  .appeal-cta h2{font-size:1.3rem}
+  .appeal-cta p{color:var(--sub);margin:12px auto 22px;max-width:52ch}
+
+  .docnav{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    padding:0 var(--pad) 64px;font-size:.9rem}
+  .docnav a{text-decoration:none;color:var(--sub);display:flex;align-items:center;gap:8px;transition:color .2s}
+  .docnav a:hover{color:var(--text)}
+  .docnav .next{text-align:right;flex-direction:row-reverse}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html#top">Cloudy<b>World</b></a>
+  <nav><ul class="nav">
+    <li><a href="index.html#world">Мир</a></li>
+    <li><a href="rules.html">Правила</a></li>
+    <li><a href="index.html#crew">Команда</a></li>
+    <li><a href="index.html#join">Как зайти</a></li>
+  </ul></nav>
+  <a class="btn small" href="https://discord.gg/DKUdvZEhP" target="_blank" rel="noopener">Discord</a>
+</header>
+
+<main>
+  <div class="page-head">
+    <p class="tag">Документ</p>
+    <h1>Правила CloudyWorld</h1>
+  </div>
+
+  <div class="rulebook">
+    <aside class="side">
+      <ul class="side-nav">
+        <li><a href="#sec-1"><span class="n">01</span>Общие положения</a></li>
+        <li><a href="#sec-2"><span class="n">02</span>Сообщество и чат</a></li>
+        <li><a href="#sec-3"><span class="n">03</span>Игровой процесс</a></li>
+        <li><a href="#sec-4"><span class="n">04</span>PvP и конфликты</a></li>
+        <li><a href="#sec-5"><span class="n">05</span>Полу-RP и лор</a></li>
+        <li><a href="#sec-6"><span class="n">06</span>Государства и системы</a></li>
+        <li><a href="#sec-7"><span class="n">07</span>Голосовой чат</a></li>
+        <li><a href="#sec-8"><span class="n">08</span>Территории и постройки</a></li>
+        <li><a href="#sec-9"><span class="n">09</span>Система наказаний</a></li>
+        <li><a href="#sec-10"><span class="n">10</span>Апелляции и амнистия</a></li>
+      </ul>
+
+      <div class="meta">
+        Действующая редакция: <b>Сезон I &middot; июль 2026</b><br>
+        Изменения анонсируются в Discord
+      </div>
+
+      <input type="search" id="ruleSearch" class="rule-search" placeholder="Поиск по правилам — например, «дюп», «спавн», «микрофон»…">
+
+      <div class="legend">
+        <p class="legend-title">Ориентиры мер</p>
+        <ul>
+          <li><span class="pen warn">Предупр.</span> &mdash; предупреждение</li>
+          <li><span class="pen mute">Мут</span> &mdash; блокировка чата</li>
+          <li><span class="pen tempban">Врем. бан</span> &mdash; от 1 до 30 дней</li>
+          <li><span class="pen ban">Бан</span> &mdash; перманентная блокировка</li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="rule-book">
+
+      <section class="rule-sec" id="sec-1">
+        <div class="rs-head"><span class="rs-num">01</span><h2>Общие положения</h2></div>
+        <p class="rs-intro">Фундамент, на котором держится всё остальное.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">1.1</span><div><h4>Незнание правил не освобождает от ответственности.</h4><p>Заявка на сервер подтверждает, что вы с ними ознакомились.</p></div></li>
+          <li class="rule"><span class="rn mono">1.2</span><div><h4>Здравый смысл превыше буквы.</h4><p>Если ситуация не описана правилами, администрация трактует её в духе сервера.</p></div></li>
+          <li class="rule"><span class="rn mono">1.3</span><div><h4>Решения администрации обязательны к исполнению.</h4><p>Несогласие оформляется апелляцией в Discord, а не спором в чате.</p></div></li>
+          <li class="rule"><span class="rn mono">1.4</span><div><h4>Один игрок &mdash; один аккаунт.</h4><p>Твинки и обход наказаний с других аккаунтов запрещены.</p></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">1.5</span><div><h4>Продажа и передача аккаунта запрещены.</h4></div><span class="pen ban">Бан</span></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-2">
+        <div class="rs-head"><span class="rs-num">02</span><h2>Сообщество и чат</h2></div>
+        <p class="rs-intro">Мы строим место, куда приятно возвращаться.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">2.1</span><div><h4>Запрещены оскорбления и переходы на личности.</h4><p>Конфликт персонажей &mdash; часть игры. Конфликт людей &mdash; нет.</p></div><span class="pen mute">Мут</span></li>
+          <li class="rule"><span class="rn mono">2.2</span><div><h4>Запрещены дискриминация и разжигание ненависти по любому признаку.</h4></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">2.3</span><div><h4>Запрещён спам, флуд и капс в игровом чате и Discord.</h4></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">2.4</span><div><h4>Запрещена реклама сторонних проектов без согласования с администрацией.</h4></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">2.5</span><div><h4>Запрещено обсуждение реальной политики и религии.</h4><p>В нашем мире хватает своей политики &mdash; играйте в неё.</p></div><span class="pen mute">Мут</span></li>
+          <li class="rule"><span class="rn mono">2.6</span><div><h4>Запрещён слив личных данных игроков (деанон) в любой форме.</h4></div><span class="pen ban">Бан</span></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-3">
+        <div class="rs-head"><span class="rs-num">03</span><h2>Игровой процесс</h2></div>
+        <p class="rs-intro">Всё ценное в этом мире добыто руками &mdash; и это защищается строже всего.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">3.1</span><div><h4>Гриферство запрещено.</h4><p>Разрушение и порча чужих построек &mdash; самое тяжкое нарушение на сервере.</p></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">3.2</span><div><h4>Воровство запрещено вне согласованных RP-сценариев (см. раздел 05).</h4></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">3.3</span><div><h4>Читы, X-Ray и запрещённые моды &mdash; мгновенный бан без предупреждений.</h4><p>Разрешены оптимизация и косметика.</p></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">3.4</span><div><h4>Дюпы и злоупотребление багами запрещены.</h4><p>Нашли баг &mdash; сообщите администрации, за это полагается награда.</p></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">3.5</span><div><h4>Запрещены машины и фермы, ощутимо нагружающие сервер.</h4><p>Спорные конструкции согласовывайте с техадмином &mdash; обычно мы разрешаем.</p></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">3.6</span><div><h4>Занимать найденные структуры можно.</h4><p>Крепость, деревня, храм, портальная комната &mdash; кто первым пришёл и обустроил, тот и владеет. Приват не запрещён. Разрушать и растаскивать чужое занятое место нельзя &mdash; это гриферство по 3.1.</p></div></li>
+          <li class="rule"><span class="rn mono">3.7</span><div><h4>Ферма считается общей, только если так написано.</h4><p>Общая ферма помечается табличкой «общая» или другим понятным опознавательным знаком. Без знака ферма частная: пользоваться ей без спроса владельца &mdash; воровство по 3.2. Пометили ферму общей &mdash; убрать пометку и закрыть её задним числом уже нельзя.</p></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">3.8</span><div><h4>Монополизация запрещена.</h4><p>Занять структуру &mdash; можно. Занять все доступные структуры одного вида, чтобы остальные не могли добраться до ресурса, &mdash; нельзя. Признаки монополизации: приват единственного известного объекта в округе, захват нескольких объектов одного вида на одного владельца, требование платы за проход к тому, что вы не строили.</p></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">3.9</span><div><h4>Приват не даёт права убивать.</h4><p>Занятая территория защищается приватом, а не оружием. Убийство зашедшего оценивается по разделу 04 на общих основаниях: нужна игровая причина, объявленная война или согласованная сцена. «Он зашёл на мой приват» такой причиной не является.</p></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">3.10</span><div><h4>Не приватизируются: спавн, общественные дороги и объекты сюжета.</h4><p>Зона спавна, дороги между базами и структуры, поставленные администрацией по ходу сезона, остаются открытыми для всех всегда.</p></div><span class="pen ban">Бан</span></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-4">
+        <div class="rs-head"><span class="rs-num">04</span><h2>PvP и конфликты</h2></div>
+        <p class="rs-intro">Конфликты &mdash; часть живого мира. Но у них есть кодекс.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">4.1</span><div><h4>PvP допустимо при наличии игровой причины.</h4><p>Война, дуэль, RP-конфликт &mdash; да. Убийство новичка ради лута &mdash; нет.</p></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">4.2</span><div><h4>Спавн-килл и преследование одного игрока запрещены.</h4></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">4.3</span><div><h4>Войны объявляются публично и ведутся по регламенту, согласованному сторонами.</h4><p>Подписанный регламент обязателен для всех участников до конца войны &mdash; его нарушение приравнивается к нарушению договора (6.6).</p></div><span class="pen warn">Предупр.</span></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-5">
+        <div class="rs-head"><span class="rs-num">05</span><h2>Полу-RP и лор</h2></div>
+        <p class="rs-intro">Отыгрыш на CloudyWorld &mdash; по желанию. Но если он начался, его уважают все.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">5.1</span><div><h4>Участие в RP добровольно.</h4><p>Никто не обязан отыгрывать персонажа. «Просто выживать» &mdash; полноправный стиль игры.</p></div></li>
+          <li class="rule"><span class="rn mono">5.2</span><div><h4>Не ломайте чужие сцены.</h4><p>Видите отыгрыш &mdash; присоединяйтесь по правилам сцены или пройдите мимо.</p></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">5.3</span><div><h4>RP-воровство и RP-конфликты допустимы в рамках сюжета и согласованных сторонами правил сцены.</h4><p>Правила сцены, принятые участниками, обязательны до её завершения &mdash; вошёл в сцену, играй по её условиям.</p></div></li>
+          <li class="rule"><span class="rn mono">5.4</span><div><h4>Лор сервера &mdash; общий канон.</h4><p>Свои сюжеты можно и нужно создавать; переписывать официальные события хроник нельзя.</p></div></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-6">
+        <div class="rs-head"><span class="rs-num">06</span><h2>Государства и системы</h2></div>
+        <p class="rs-intro">Как устроено общество мира &mdash; решаете вы. Сервер охраняет рамки и следит за одним: принятые слова должны держаться.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">6.1</span><div><h4>Игроки свободны создавать любые системы: государства, союзы, религии, экономики &mdash; или не создавать ничего.</h4><p>Система считается введённой после одобрения администрацией (проверка на соответствие правилам и духу сезона) и публичного объявления в Discord.</p></div></li>
+          <li class="rule"><span class="rn mono">6.2</span><div><h4>Законы систем не могут противоречить правилам сервера.</h4><p>Внутри этих рамок системы вольны в остальном: устройство, символика, налоги, суды.</p></div></li>
+          <li class="rule"><span class="rn mono">6.3</span><div><h4>Вступление в систему &mdash; только добровольное. Гражданство, налоги и служба &mdash; по согласию игрока.</h4><p>Но выбор обязывает: если система введена и вы в ней состоите (или голосовали за её принятие) &mdash; соблюдать её законы обязательно. Состоять и игнорировать запрещено.</p></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">6.4</span><div><h4>Выход из системы гарантирован.</h4><p>Покинуть систему можно по её публичной процедуре. Обязательства, взятые до выхода, исполняются; удерживать игрока силой запрещено.</p></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">6.5</span><div><h4>На территории системы действуют её законы.</h4><p>Гость обязан соблюдать публично объявленные правила территории &mdash; но принудить гостя к гражданству, налогам или службе нельзя.</p></div></li>
+          <li class="rule"><span class="rn mono">6.6</span><div><h4>Публичные договоры обязательны.</h4><p>Союзы, сделки и соглашения между системами и игроками, заключённые открыто, исполняются обеими сторонами. Публичное расторжение &mdash; допустимо, тихий «кидок» &mdash; нарушение.</p></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">6.7</span><div><h4>Власть &mdash; не прикрытие.</h4><p>Использовать «законы» системы для гриферства, травли или обхода правил сервера запрещено. Система, системно нарушающая правила, может быть распущена администрацией.</p></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">6.8</span><div><h4>Территориальные претензии оформляются публично &mdash; на карте и в Discord, чтобы споры решались словами.</h4></div></li>
+          <li class="rule"><span class="rn mono">6.9</span><div><h4>Новые механики сезона обсуждаются с сообществом.</h4><p>Предлагайте свои &mdash; лучшие идеи внедряются в мир.</p></div></li>
+          <li class="rule"><span class="rn mono">6.10</span><div><h4>Владельцы территории вправе закрыть вход игроку.</h4><p>Объявить отказ можно по-простому: сказать в общий чат, написать в Discord или повесить табличку на границе. Важно одно &mdash; игрок назван по нику и предупреждён понятными словами. Сказанное в личку или голосом не считается: это нечем подтвердить, а по 6.11 за заход теперь убивают. Право есть у объявленной системы (6.1), действует внутри её границ (6.8) и не распространяется на спавн, общественные дороги и объекты сюжета (3.10). Вещи и постройки отказника, оставшиеся внутри, возвращаются ему полностью: закрытый вход не передаёт его имущество владельцам.</p></div></li>
+          <li class="rule"><span class="rn mono">6.11</span><div><h4>Зашёл после предупреждения &mdash; могут убить.</h4><p>Порядок такой: сначала предупреждение в чат и время уйти своими ногами, и только потом оружие. Действует лишь внутри объявленных границ и лишь против того, кому вход закрыт по 6.10, &mdash; на обычных гостей и на приват это не распространяется (3.9). Убивший обязан собрать весь дроп и вернуть до последнего предмета; что утонуло, сгорело или пропало &mdash; возмещает из своего, как и в случае с ловушкой по 4.4. Один раз за визит: добивать у точки возрождения и гнать за границей запрещено (4.2). Смерть отказника не передаёт его вещи владельцам. Сам заход при этом остаётся нарушением.</p></div><span class="pen warn">Предупр.</span></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-7">
+        <div class="rs-head"><span class="rs-num">07</span><h2>Голосовой чат</h2></div>
+        <p class="rs-intro">Голос по близости &mdash; душа сервера. Берегите её.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">7.1</span><div><h4>Все правила общения (раздел 02) действуют и в голосе.</h4></div><span class="pen mute">Мут</span></li>
+          <li class="rule"><span class="rn mono">7.2</span><div><h4>Запрещены музыка, саундпады и шумы в микрофон без согласия окружающих.</h4></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">7.3</span><div><h4>Запрещена запись чужого голоса для публикации без разрешения.</h4><p>Стримы и летсплеи по серверу &mdash; можно и нужно.</p></div><span class="pen mute">Мут</span></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-8">
+        <div class="rs-head"><span class="rs-num">08</span><h2>Территории и постройки</h2></div>
+        <p class="rs-intro">Мир общий, но личное пространство &mdash; святое. Несколько правил добрососедства.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">8.1</span><div><h4>Не стройтесь вплотную к чужим базам.</h4><p>Минимальное расстояние &mdash; 100 блоков, ближе &mdash; только с согласия соседа.</p></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">8.2</span><div><h4>Зона спавна и общественные дороги застраиваются только с разрешения администрации.</h4></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">8.3</span><div><h4>Не уродуйте ландшафт.</h4><p>Столбы 1&times;1, парящие обрубки деревьев и «дырявые» карьеры у дорог &mdash; прибирайте за собой.</p></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">8.4</span><div><h4>Самозахват заброшек запрещён.</h4><p>Покинутые постройки передаются новым владельцам через администрацию.</p></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">8.5</span><div><h4>Ставьте табличку с ником у базы.</h4><p>Так соседям и смотрителям проще решать любые вопросы.</p></div></li>
+        </ul>
+      </section>
+
+      <section class="rule-sec" id="sec-9">
+        <div class="rs-head"><span class="rs-num">09</span><h2>Система наказаний</h2></div>
+        <p class="rs-intro">Меры применяются по нарастающей: сначала разговор, потом строже. Ступени ниже &mdash; как это работает.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">I</span><div><h4>Первое незначительное нарушение &mdash; беседа со смотрителем или предупреждение.</h4></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">II</span><div><h4>Три активных предупреждения объединяются в более строгую меру.</h4></div><span class="pen mute">Мут</span></li>
+          <li class="rule"><span class="rn mono">III</span><div><h4>Серьёзное или повторное нарушение &mdash; временная блокировка.</h4></div><span class="pen tempban">Врем. бан</span></li>
+          <li class="rule"><span class="rn mono">IV</span><div><h4>Тяжкое нарушение или рецидив после бана &mdash; перманентная блокировка.</h4></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">9.1</span><div><h4>Обход наказания (твинки, смена ника) &mdash; перманентный бан без права апелляции.</h4></div><span class="pen ban">Бан</span></li>
+          <li class="rule"><span class="rn mono">9.2</span><div><h4>Пострадавшим возвращается имущество.</h4><p>По логам сервера, если восстановление технически возможно.</p></div></li>
+          <li class="rule"><span class="rn mono">9.3</span><div><h4>Срок давности.</h4><p>Незначительные предупреждения «сгорают» со сменой сезона.</p></div></li>
+          <li class="rule"><span class="rn mono">9.4</span><div><h4>Публичное обсуждение чужих наказаний в чатах запрещено &mdash; для этого есть апелляции.</h4></div><span class="pen warn">Предупр.</span></li>
+        </ul>
+        <p class="rule-note">Тяжесть наказания определяет администрация с учётом контекста, умысла и истории нарушений. Указанные меры &mdash; ориентир, а не приговор: за первый мелкий проступок чаще всего будет разговор, за системные нарушения &mdash; суровее, чем в таблице.</p>
+      </section>
+
+      <section class="rule-sec" id="sec-10">
+        <div class="rs-head"><span class="rs-num">10</span><h2>Апелляции и амнистия</h2></div>
+        <p class="rs-intro">Мы ошибаемся редко, но честно это признаём. Порядок обжалования &mdash; ниже.</p>
+        <ul class="rule-list">
+          <li class="rule"><span class="rn mono">10.1</span><div><h4>Апелляция подаётся в Discord в течение 7 дней после наказания.</h4><p>Формат: ник, дата, суть ситуации и доказательства (скриншоты, записи).</p></div></li>
+          <li class="rule"><span class="rn mono">10.2</span><div><h4>Рассмотрение &mdash; до 48 часов.</h4><p>Решение по апелляции окончательно и пересмотру в рамках сезона не подлежит.</p></div></li>
+          <li class="rule"><span class="rn mono">10.3</span><div><h4>Флуд апелляциями и давление на смотрителей ухудшают исход дела.</h4></div><span class="pen warn">Предупр.</span></li>
+          <li class="rule"><span class="rn mono">10.4</span><div><h4>Амнистия &mdash; раз в сезон.</h4><p>На старте нового мира часть перманентных блокировок пересматривается. Заявки объявляются в Discord.</p></div></li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <div class="appeal-cta">
+    <p class="tag">Спорные ситуации</p>
+    <h2>Не согласны с наказанием?</h2>
+    <p>Апелляции рассматриваются в Discord в специальном канале. Опишите ситуацию спокойно и приложите доказательства &mdash; мы разберёмся честно.</p>
+    <a class="btn" href="https://discord.gg/DKUdvZEhP" target="_blank" rel="noopener">Подать апелляцию в Discord</a>
+  </div>
+
+  <nav class="docnav">
+    <a href="index.html">&larr; На главную</a>
+    <a class="next" href="https://cloudyworlds.ru/wiki" target="_blank" rel="noopener">Вики сервера &rarr;</a>
+  </nav>
+</main>
+
+<footer>
+  <div class="foot">
+    <div class="about">
+      <a class="logo" href="index.html#top">Cloudy<b>World</b></a>
+      <p>Сезонный полу-RP Minecraft-сервер с собственным лором. Каждый сезон &mdash; новый мир и новая история.</p>
+    </div>
+    <div>
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html#world">Мир</a></li>
+        <li><a href="rules.html">Правила</a></li>
+        <li><a href="index.html#crew">Команда</a></li>
+        <li><a href="index.html#join">Как зайти</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Связь</h4>
+      <ul>
+        <li><a href="https://discord.gg/DKUdvZEhP" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="https://www.twitch.tv/subertoples" target="_blank" rel="noopener">Twitch</a></li>
+        <li><a href="https://www.youtube.com/@thedavka8776" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="https://cloudyworlds.ru/" target="_blank" rel="noopener">cloudyworlds.ru</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>&copy; <span id="yr"></span> CloudyWorld</span>
+    <span>Minecraft &mdash; товарный знак Mojang Synergies AB. Сервер не аффилирован с Mojang.</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var input = document.getElementById('ruleSearch');
+  var sections = Array.from(document.querySelectorAll('.rule-sec'));
+
+  input.addEventListener('input', function () {
+    var q = input.value.trim().toLowerCase();
+    sections.forEach(function (sec) {
+      var rules = Array.from(sec.querySelectorAll('.rule'));
+      var anyVisible = false;
+      rules.forEach(function (rule) {
+        var match = !q || rule.textContent.toLowerCase().indexOf(q) !== -1;
+        rule.hidden = !match;
+        if (match) anyVisible = true;
+      });
+      sec.hidden = !anyVisible;
+    });
+  });
+</script>
+</body>
+</html>
